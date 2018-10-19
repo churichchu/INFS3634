@@ -18,8 +18,8 @@
             </intent-filter>
         </activity>
         <activity android:name=".ModuleActivity" />
-        <activity android:name=".ModuleVideo"></activity>
-        <activity android:name=".QuizMainActivity"></activity>
+        <activity android:name=".ModuleVideo" />
+        <activity android:name=".QuizMainActivity" />
     </application>
 
 </manifest>

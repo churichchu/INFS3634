@@ -22,9 +22,8 @@ public class ModuleActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_module);
-        prepareButtonText();
 
-        //modules = (TextView) findViewById(R.id.modules);
+        prepareButtonText();
         mod1 = (Button) findViewById(R.id.mod1);
         mod1.setText(buttonText.get(0));
         mod2 = (Button) findViewById(R.id.mod2);

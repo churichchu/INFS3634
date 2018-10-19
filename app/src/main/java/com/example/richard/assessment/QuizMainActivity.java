@@ -67,7 +67,6 @@ public class QuizMainActivity extends AppCompatActivity {
             randAnswer = am.get(mRandAnswer).getmAnswers();
         }
 
-
         TextView tv = findViewById(R.id.questionText);
         tv.setText(questionText);
 
