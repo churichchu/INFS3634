@@ -1,3 +1,72 @@
 <resources>
-    <string name="app_name">Assessment</string>
+    <string name="app_name">myModule</string>
+    <string name="mod">Modules</string>
+    <string name="mod_desc">This video explains the difference\nbetween a primary key and foreign key\nA
+        primary key uniquely identifies any \nrecord in a table, while a foreign key\n
+        is used to reference occurences of an \nentity in another table.</string>
+    <string name="desc">Description</string>
+    <string name="vid_id">6feMtVOaSy4</string>
+    <string name="init_success">YouTube player initialized successfully</string>
+    <string name="vid_error">Sorry, the YouTube player failed to initialize. Please try again.</string>
+    <string name="mc_quiz">Proceed to Multiple Choice Quiz!</string>
+    <string name="youtube_api">AIzaSyCswXWWw5i4Rj3_cz168SSdsLTylncsI0o</string>
+    <string name="thumbnail_fail">The YouTube thumbnail failed to load.</string>
+    <string name="back">Go Back</string>
+    <string name="start">start</string>
+
+    <string-array name="moduleTitles">
+        <item>Module 1: Database Fundamentals</item>
+        <item>Module 2: Creating a Database</item>
+        <item>Module 3: Querying the Database</item>
+    </string-array>
+
+    <string-array name="module1_list_items">
+        <item>Tables, Primary Keys, Foreign Keys and Relationships</item>
+        <item>Entity Relationship Diagram and Relational Models</item>
+    </string-array>
+
+    <string-array name="module2_list_items">
+        <item>The CREATE TABLE and INSERT INTO Statements</item>
+    </string-array>
+
+    <string-array name="module3_list_items">
+        <item>Basic SQL Statements</item>
+    </string-array>
+
+    <string-array name="all_modules">
+        <item>Tables, Primary Keys, Foreign Keys and Relationships</item>
+        <item>Entity Relationship Diagram and Relational Models</item>
+        <item>The CREATE TABLE and INSERT INTO Statements</item>
+        <item>Basic SQL Statements</item>
+    </string-array>
+
+
+    <string-array name="moduleDescriptions">
+        <item>Learn about tables, primary keys, foreign keys \nand relationships.</item>
+        <item>Learn about entity relationship diagrams and\nrelational models.</item>
+        <item>Learn how to create a database in SQL\n using the CREATE TABLE Statement and \nthe INSERT INTO Statement.</item>
+        <item>Learn about different statements you can\n use to query the database, such as\n SELECT and UPDATE statements.</item>
+    </string-array>
+
+    <string-array name="video_IDs">
+        <item>6feMtVOaSy4</item>
+        <item>nmDpnm8RtdI</item>
+        <item>T9d40CdzW-M</item>
+        <item>5dszS8TxTJ4</item>
+    </string-array>
+
+    <string-array name="video_names">
+        <item>Primary Key and Foreign Key Tutorial</item>
+        <item>How to draw an ER diagram and a Relational Schema </item>
+        <item>SQL Basics: Creating Tables and Inserting Data</item>
+        <item>SQL: Data Manipulation Language</item>
+    </string-array>
+
+    <string-array name="vid_durations">
+        <item>9:20</item>
+        <item>10:34</item>
+        <item>12:29</item>
+        <item>9:56</item>
+    </string-array>
+
 </resources>
