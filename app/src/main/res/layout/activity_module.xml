@@ -19,7 +19,7 @@
         android:id="@+id/mod2"
         android:layout_height="wrap_content"
         android:layout_width="match_parent"
-        android:fillColor="#00FFFF"
+        android:fillColor="@android:color/holo_blue_light"
         android:textColor="#FFFFFF"
         android:onClick="onButtonClick" />
 

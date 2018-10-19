@@ -37,8 +37,8 @@ public class ModuleVideo extends YouTubeBaseActivity {
         proc_mcq.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                //Intent i = new Intent(ModuleVideo.this, MCQActivity.class);
-                //startActivity(i);
+                Intent i = new Intent(ModuleVideo.this, QuizMainActivity.class);
+                startActivity(i);
             }
         });
 
