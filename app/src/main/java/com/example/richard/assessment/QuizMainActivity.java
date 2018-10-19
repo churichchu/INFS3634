@@ -73,12 +73,19 @@ public class QuizMainActivity extends AppCompatActivity {
         Button btn = btns[mQnANum];
         btn.setText(answerText);
 
+        /*int ii = 0;
+
         for(int i = 1; i < btns.length; i++) {
             Button randBtn = btns[btnPlacementNum];
 
             if (btns[btnPlacementNum].getText().equals("Button")) {
                 randBtn.setText(randAnswer);
                 takenAnswers.add(randAnswer);
+
+                ii++;
+            }else if(btns[btnPlacementNum].getText().equals(takenAnswers.get(ii))){
+                btnPlacementNum = r3.nextInt(4);
+                randBtn = btns[btnPlacementNum];
             }
             else{
 
@@ -86,6 +93,6 @@ public class QuizMainActivity extends AppCompatActivity {
                 i--;
 
             }
-        }
+        }*/
     }
 }
