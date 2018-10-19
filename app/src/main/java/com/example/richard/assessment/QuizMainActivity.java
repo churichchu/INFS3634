@@ -73,7 +73,7 @@ public class QuizMainActivity extends AppCompatActivity {
         Button btn = btns[mQnANum];
         btn.setText(answerText);
 
-        int ii = 0;
+        /*int ii = 0;
 
         for(int i = 1; i < btns.length; i++) {
             Button randBtn = btns[btnPlacementNum];
@@ -93,6 +93,6 @@ public class QuizMainActivity extends AppCompatActivity {
                 i--;
 
             }
-        }
+        }*/
     }
 }
