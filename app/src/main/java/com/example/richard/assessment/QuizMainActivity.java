@@ -62,10 +62,17 @@ public class QuizMainActivity extends AppCompatActivity {
         //IF statement to make sure random generated answers
         //are not the same as the correct answer nor previously
         //generated ones
-        if(randAnswer.equals(randAnswer) || randAnswer.equals(answerText)){
+        for(int i = 0; i <btns.length; i++){
             mRandAnswer = r2.nextInt(4-1)+1;
             randAnswer = am.get(mRandAnswer).getmAnswers();
+            if(!btns[i].getText().equals("Button")) {
+                i--;
+
+            }
+            btns[mRandAnswer].setText(randAnswer);
+
         }
+
 
         TextView tv = findViewById(R.id.questionText);
         tv.setText(questionText);
@@ -73,15 +80,13 @@ public class QuizMainActivity extends AppCompatActivity {
         Button btn = btns[mQnANum];
         btn.setText(answerText);
 
-        int ii = 0;
 
+        /*Button randBtn = btns[btnPlacementNum];
         for(int i = 1; i < btns.length; i++) {
-            Button randBtn = btns[btnPlacementNum];
 
             if (btns[btnPlacementNum].getText().equals("Button")) {
                 randBtn.setText(randAnswer);
-
-                //takenAnswers.add(randAnswer);
+                takenAnswers.add(randAnswer);
             }
             else{
 
@@ -90,5 +95,11 @@ public class QuizMainActivity extends AppCompatActivity {
 
             }
         }
+
+        for(int i = 0; i < btns.length; i++){
+            if(takenAnswers.contains(randAnswer)){
+
+            }
+        }*/
     }
 }
