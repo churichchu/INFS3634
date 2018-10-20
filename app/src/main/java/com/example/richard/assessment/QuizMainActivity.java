@@ -27,9 +27,6 @@ public class QuizMainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.quiz_activity_main);
 
-        final Button next = (Button) findViewById(R.id.next);
-        next.setVisibility(View.INVISIBLE);
-
         //retrieved questions array list
         ArrayList<QuestionsModel> qm = new ArrayList<>();
         qm = QandADatabase.getQuestionsArrayList();
@@ -132,9 +129,8 @@ public class QuizMainActivity extends AppCompatActivity {
                     Toast.makeText(getApplicationContext(), "Incorrect", Toast.LENGTH_LONG).show();
                 }
                 for (int i = 0; i < btns.length; i++) {
-                    btns[i].setActivated(false);
+                    btns[i].setEnabled(false);
                 }
-                next.setVisibility(View.VISIBLE);
             }
         });
 
@@ -147,7 +143,7 @@ public class QuizMainActivity extends AppCompatActivity {
                     Toast.makeText(getApplicationContext(), "InCorrect", Toast.LENGTH_LONG).show();
                 }
                 for (int i = 0; i < btns.length; i++) {
-                    btns[i].setActivated(false);
+                    btns[i].setEnabled(false);
                 }
             }
         });
@@ -161,9 +157,8 @@ public class QuizMainActivity extends AppCompatActivity {
                     Toast.makeText(getApplicationContext(), "Incorrect", Toast.LENGTH_LONG).show();
                 }
                 for (int i = 0; i < btns.length; i++) {
-                    btns[i].setActivated(false);
+                    btns[i].setEnabled(false);
                 }
-                next.setVisibility(View.VISIBLE);
             }
         });
 
@@ -176,9 +171,8 @@ public class QuizMainActivity extends AppCompatActivity {
                     Toast.makeText(getApplicationContext(), "Incorrect", Toast.LENGTH_LONG).show();
                 }
                 for (int i = 0; i < btns.length; i++) {
-                    btns[i].setActivated(false);
+                    btns[i].setEnabled(false);
                 }
-                next.setVisibility(View.VISIBLE);
             }
         });
     }
