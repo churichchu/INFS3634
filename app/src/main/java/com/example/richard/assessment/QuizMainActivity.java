@@ -1,5 +1,7 @@
 package com.example.richard.assessment;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.os.Build;
 import android.support.annotation.RequiresApi;
 import android.support.v7.app.AppCompatActivity;
@@ -73,10 +75,10 @@ public class QuizMainActivity extends AppCompatActivity {
         ArrayList<Integer> randNums = new ArrayList<Integer>();
         btns[mQnANum].setText(answerText);
         randNums.add(mQnANum);
-        //int i = 0;
-        /*while (i < btns.length) {
-            int mRandAnswer = r.nextInt(3 - 0 + 1) + 0;
-        }*/
+
+        //IF statement to make sure random generated answers
+        //are not the same as the correct answer nor previously
+        //generated ones
         int mRandAnswer = 0;
         for(int i = 0; i < 20; i++) {
             mRandAnswer = r.nextInt(3 - 0 + 1) + 0;
@@ -85,96 +87,39 @@ public class QuizMainActivity extends AppCompatActivity {
                 btns[mRandAnswer].setText(randAnswer);
                 randNums.add(mRandAnswer);
             }
-
         }
 
+        for(int k = 0; k < btns.length; k++) {
+            final int finalK = k;
+            btns[k].setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if(btns[finalK].getText().toString().equals(answerText)) {
+                        createDialogBox().setMessage("Correct!").show();
+                    } else {
+                        createDialogBox().setMessage("Incorrect!").show();
+                    }
+                    for (int i = 0; i < btns.length; i++) {
+                        btns[i].setEnabled(false);
 
-
-        //IF statement to make sure random generated answers
-        //are not the same as the correct answer nor previously
-        //generated ones
-        //int randomNum = ThreadLocalRandom.current().nextInt(am.get(0).getId(), btns.length + 1);
-
-
-
-
-
-        /*Button randBtn = btns[btnPlacementNum];
-        for(int i = 1; i < btns.length; i++) {
-
-            if (btns[btnPlacementNum].getText().equals("Button")) {
-                randBtn.setText(randAnswer);
-                takenAnswers.add(randAnswer);
-            }
-            else{
-
-                btnPlacementNum = r3.nextInt(4);
-                i--;
-
-            }
+                    }
+                }
+            });
         }
 
-        for(int i = 0; i < btns.length; i++){
-            if(takenAnswers.contains(randAnswer)){
+    }
 
-            }
-        }*/
-
-        btns[0].setOnClickListener(new View.OnClickListener() {
+    public AlertDialog.Builder createDialogBox() {
+        AlertDialog.Builder ansFeedback = new AlertDialog.Builder(this);
+        ansFeedback.setTitle("Feedback");
+        ansFeedback.setCancelable(false);
+        ansFeedback.setPositiveButton("Next", new DialogInterface.OnClickListener() {
             @Override
-            public void onClick(View v) {
-                if(btns[0].getText().toString().equals(answerText)) {
-                    Toast.makeText(getApplicationContext(), "Correct", Toast.LENGTH_LONG).show();
-                } else {
-                    Toast.makeText(getApplicationContext(), "Incorrect", Toast.LENGTH_LONG).show();
-                }
-                for (int i = 0; i < btns.length; i++) {
-                    btns[i].setEnabled(false);
-                }
+            public void onClick(DialogInterface dialog, int which) {
+                //go to next question
             }
         });
-
-        btns[1].setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if(btns[1].getText().toString().equals(answerText)) {
-                    Toast.makeText(getApplicationContext(), "Correct", Toast.LENGTH_LONG).show();
-                } else {
-                    Toast.makeText(getApplicationContext(), "InCorrect", Toast.LENGTH_LONG).show();
-                }
-                for (int i = 0; i < btns.length; i++) {
-                    btns[i].setEnabled(false);
-                }
-            }
-        });
-
-        btns[2].setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if(btns[2].getText().toString().equals(answerText)) {
-                    Toast.makeText(getApplicationContext(), "Correct", Toast.LENGTH_LONG).show();
-                } else {
-                    Toast.makeText(getApplicationContext(), "Incorrect", Toast.LENGTH_LONG).show();
-                }
-                for (int i = 0; i < btns.length; i++) {
-                    btns[i].setEnabled(false);
-                }
-            }
-        });
-
-        btns[3].setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if(btns[3].getText().toString().equals(answerText)) {
-                    Toast.makeText(getApplicationContext(), "Correct", Toast.LENGTH_LONG).show();
-                } else {
-                    Toast.makeText(getApplicationContext(), "Incorrect", Toast.LENGTH_LONG).show();
-                }
-                for (int i = 0; i < btns.length; i++) {
-                    btns[i].setEnabled(false);
-                }
-            }
-        });
+        return ansFeedback;
     }
 
 
