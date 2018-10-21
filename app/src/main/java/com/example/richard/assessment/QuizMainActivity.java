@@ -26,6 +26,7 @@ public class QuizMainActivity extends AppCompatActivity {
     TextView question;
     int mQnANum, btnPlacementNum, mRandAnswer;
     final Button[] btns = new Button[NUM_ANSWERS];
+    Button next;
 
     ArrayList<QuestionsModel> qm = new ArrayList<>();
     ArrayList<AnswersModel> am = new ArrayList<>();
@@ -43,7 +44,9 @@ public class QuizMainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.quiz_activity_main);
 
-        question = findViewById(R.id.questionText);
+        question = (TextView) findViewById(R.id.questionText);
+        next = (Button) findViewById(R.id.nextQ);
+        next.setVisibility(View.INVISIBLE);
 
         //Buttons array to randomly place answers for generated questions
         btns[0] = (Button) findViewById(R.id.btn1);
@@ -120,11 +123,13 @@ public class QuizMainActivity extends AppCompatActivity {
                     public void onClick(View v) {
                         if(btns[finalK].getText().toString().equals(answerText)) {
                             btns[finalK].setBackgroundColor(Color.GREEN);
+                            next.setVisibility(View.VISIBLE);
                         } else {
                             Animation shakeButton = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.shake);
                             btns[mQnANum].startAnimation(shakeButton);
                             btns[finalK].setBackgroundColor(Color.RED);
                             btns[mQnANum].setBackgroundColor(Color.GREEN);
+                            next.setVisibility(View.VISIBLE);
 
                         }
                         for (int i = 0; i < btns.length; i++) {
@@ -137,23 +142,6 @@ public class QuizMainActivity extends AppCompatActivity {
         }
 
     }
-
-    public AlertDialog.Builder createDialogBox() {
-        AlertDialog.Builder ansFeedback = new AlertDialog.Builder(this);
-        ansFeedback.setTitle("Feedback");
-        ansFeedback.setCancelable(false);
-        ansFeedback.setPositiveButton("Next", new DialogInterface.OnClickListener() {
-            @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                for(int i = 0; i < NUM_ANSWERS; i++) {
-
-                }
-            }
-        });
-        return ansFeedback;
-    }
-
 
 
 }

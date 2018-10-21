@@ -8,35 +8,36 @@
     android:gravity="center"
     tools:context=".ModuleVideo">
 
-    <ImageView
-        android:id="@+id/imageView3"
-        android:layout_width="233dp"
-        android:layout_height="36dp"
+    <TextView
+        android:id="@+id/app_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
         android:layout_marginLeft="8dp"
         android:layout_marginEnd="8dp"
         android:layout_marginRight="8dp"
-        android:layout_marginBottom="24dp"
-        android:contentDescription="@string/app_name"
+        android:layout_marginBottom="32dp"
+        android:text="@string/app_name"
+        android:textColor="@android:color/holo_orange_light"
+        android:textSize="36sp"
         app:layout_constraintBottom_toTopOf="@+id/youtube_player"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.503"
-        app:layout_constraintStart_toStartOf="parent"
-        app:srcCompat="@drawable/appname" />
+        app:layout_constraintHorizontal_bias="0.497"
+        app:layout_constraintStart_toStartOf="@+id/back" />
 
     <Button
         android:id="@+id/back"
         android:layout_width="67dp"
         android:layout_height="64dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginRight="8dp"
-        android:layout_marginBottom="500dp"
+        android:layout_marginEnd="316dp"
+        android:layout_marginRight="316dp"
+        android:layout_marginBottom="508dp"
         android:background="@android:color/white"
-        android:text="@string/backBtn"
+        android:text="B"
         android:textColor="@android:color/holo_orange_light"
         android:textSize="36sp"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/imageView3" />
+        app:layout_constraintEnd_toEndOf="parent" />
 
     <com.google.android.youtube.player.YouTubePlayerView
         android:id="@+id/youtube_player"
