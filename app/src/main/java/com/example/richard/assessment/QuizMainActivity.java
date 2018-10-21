@@ -21,8 +21,6 @@ public class QuizMainActivity extends AppCompatActivity {
     final int NUM_ANSWERS = 4;
     String answerText;
 
-
-
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     @Override
     protected void onCreate(Bundle savedInstanceState) {

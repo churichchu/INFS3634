@@ -11,7 +11,6 @@ import android.widget.TextView;
 public class MainActivity extends AppCompatActivity {
 
     ImageView logo;
-    TextView appName;
     Button startBtn;
 
     @Override
@@ -19,8 +18,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        logo = (ImageView)findViewById(R.id.logo);
-        appName = (TextView) findViewById(R.id.name);
+        logo = (ImageView) findViewById(R.id.logo);
         startBtn = (Button) findViewById(R.id.startBtn);
 
         startBtn.setOnClickListener(new View.OnClickListener() {

@@ -6,6 +6,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import java.util.Arrays;
@@ -13,7 +14,8 @@ import java.util.List;
 
 public class ModuleActivity extends AppCompatActivity {
 
-    Button mod1, mod2, mod3, mod4;
+    Button mod1, mod2, mod3, mod4, back;
+    ImageView name;
     TextView modules;
     List<String> buttonText;
     VideoModel vidModel;
@@ -22,6 +24,12 @@ public class ModuleActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_module);
+
+        back = (Button) findViewById(R.id.back);
+        name = (ImageView) findViewById(R.id.name);
+        modules = (TextView) findViewById(R.id.modules);
+
+
 
         prepareButtonText();
         mod1 = (Button) findViewById(R.id.mod1);
@@ -77,5 +85,11 @@ public class ModuleActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         }
+    }
+
+    public void onBack(View v) {
+        Intent i = new Intent(ModuleActivity.this, MainActivity.class);
+        this.startActivity(i);
+
     }
 }
