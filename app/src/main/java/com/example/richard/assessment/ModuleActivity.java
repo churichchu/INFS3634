@@ -30,25 +30,26 @@ public class ModuleActivity extends AppCompatActivity {
         modules = (TextView) findViewById(R.id.modules);
 
 
-
-        prepareButtonText();
         mod1 = (Button) findViewById(R.id.mod1);
-        mod1.setText(buttonText.get(0));
         mod2 = (Button) findViewById(R.id.mod2);
-        mod2.setText(buttonText.get(1));
         mod3 = (Button) findViewById(R.id.mod3);
-        mod3.setText(buttonText.get(2));
         mod4 = (Button) findViewById(R.id.mod4);
+
+        setButtonText();
+
+    }
+
+    public void setButtonText() {
+        Resources res = getResources();
+        buttonText = Arrays.asList(res.getStringArray(R.array.all_modules));
+        mod1.setText(buttonText.get(0));
+        mod2.setText(buttonText.get(1));
+        mod3.setText(buttonText.get(2));
         mod4.setText(buttonText.get(3));
     }
 
-    public void prepareButtonText() {
-        Resources res = getResources();
-        buttonText = Arrays.asList(res.getStringArray(R.array.all_modules));
-    }
-
     public void onButtonClick(View view) {
-        String module = null;
+        String module;
         switch (view.getId()) {
             case R.id.mod1:
                 module = String.valueOf(mod1.getText());

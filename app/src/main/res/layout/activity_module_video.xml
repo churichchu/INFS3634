@@ -33,7 +33,7 @@
         android:layout_marginRight="316dp"
         android:layout_marginBottom="508dp"
         android:background="@android:color/white"
-        android:text="B"
+        android:text="<"
         android:textColor="@android:color/holo_orange_light"
         android:textSize="36sp"
         app:layout_constraintBottom_toBottomOf="parent"
