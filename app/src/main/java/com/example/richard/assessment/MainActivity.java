@@ -6,12 +6,11 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
-import android.widget.TextView;
 
 public class MainActivity extends AppCompatActivity {
 
     ImageView logo;
-    Button startBtn;
+    Button start;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -19,14 +18,15 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         logo = (ImageView) findViewById(R.id.logo);
-        startBtn = (Button) findViewById(R.id.startBtn);
+        start = (Button) findViewById(R.id.startBtn);
 
-        startBtn.setOnClickListener(new View.OnClickListener() {
+        start.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View view) {
+            public void onClick(View v) {
                 Intent i = new Intent(MainActivity.this, ModuleActivity.class);
                 startActivity(i);
             }
         });
+
     }
 }

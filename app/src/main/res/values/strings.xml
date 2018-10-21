@@ -16,6 +16,8 @@
     <string name="Incorrect">Incorrect</string>
     <string name="Correct">Correct</string>
     <string name="next">next</string>
+    <string name="modules">modules</string>
+    <string name="backBtn">Go Back</string>
 
     <string-array name="moduleTitles">
         <item>Module 1: Database Fundamentals</item>
@@ -72,10 +74,6 @@
         <item>9:56</item>
     </string-array>
 
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
-    <string name="backBtn"><![CDATA[<]]></string>
-    <string name="modules">Modules</string>
-    <string name="logo">logo</string>
+
 
 </resources>

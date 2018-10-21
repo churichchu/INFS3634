@@ -2,11 +2,14 @@ package com.example.richard.assessment;
 
 import android.app.AlertDialog;
 import android.content.DialogInterface;
+import android.graphics.Color;
 import android.os.Build;
 import android.support.annotation.RequiresApi;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -116,9 +119,13 @@ public class QuizMainActivity extends AppCompatActivity {
                     @Override
                     public void onClick(View v) {
                         if(btns[finalK].getText().toString().equals(answerText)) {
-                            createDialogBox().setMessage("Correct!").show();
+                            btns[finalK].setBackgroundColor(Color.GREEN);
                         } else {
-                            createDialogBox().setMessage("Incorrect!").show();
+                            Animation shakeButton = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.shake);
+                            btns[mQnANum].startAnimation(shakeButton);
+                            btns[finalK].setBackgroundColor(Color.RED);
+                            btns[mQnANum].setBackgroundColor(Color.GREEN);
+
                         }
                         for (int i = 0; i < btns.length; i++) {
                             btns[i].setEnabled(false);
