@@ -15,7 +15,7 @@ import java.util.List;
 public class ModuleActivity extends AppCompatActivity {
 
     Button mod1, mod2, mod3, mod4, back;
-    ImageView name;
+    TextView name;
     TextView modules;
     List<String> buttonText;
     VideoModel vidModel;
@@ -26,7 +26,7 @@ public class ModuleActivity extends AppCompatActivity {
         setContentView(R.layout.activity_module);
 
         back = (Button) findViewById(R.id.back);
-        name = (ImageView) findViewById(R.id.name);
+        name = (TextView) findViewById(R.id.app_name);
         modules = (TextView) findViewById(R.id.modules);
 
 
