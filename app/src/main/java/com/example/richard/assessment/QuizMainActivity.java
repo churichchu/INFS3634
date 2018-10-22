@@ -127,14 +127,11 @@ public class QuizMainActivity extends AppCompatActivity {
 
         takenAnswers.add(mQnANum);
 
-        //RICHARD: This for loop randomises where answers are placed. I was unable to randomise it
-
         for (int i = 0; i < 20; i++) {
             mRandAnswer = r.nextInt(3 - 0 + 1) + 0;
             if (!btns[mRandAnswer].equals(answerText) && !takenAnswers.contains(mRandAnswer)) {
                 randAnswer = am.get(mRandAnswer).getmAnswers();
                 btns[mRandAnswer].setText(randAnswer);
-                //takenAnswers.add(mRandAnswer);
             }
 
         }
