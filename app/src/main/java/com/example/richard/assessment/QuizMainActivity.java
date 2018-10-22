@@ -136,7 +136,7 @@ public class QuizMainActivity extends AppCompatActivity {
         takenAnswers.add(mQnANum);
 
 
-        //randomise Answers
+        //randomise Answers *WORKS*
         for (int i = 0; i < NUM_ANSWERS; i++) {
             if(i == mQnANum) {
                 btns[i].setText(answerText);
