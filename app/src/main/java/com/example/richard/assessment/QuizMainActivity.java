@@ -1,5 +1,6 @@
 package com.example.richard.assessment;
 
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.Build;
 import android.support.annotation.RequiresApi;
@@ -21,11 +22,12 @@ public class QuizMainActivity extends AppCompatActivity {
     final int NUM_ANSWERS = 4;
     final int NUM_QUESTIONS = 4;
     int mQnANum, btnPlacementNum, mRandAnswer;
+    int clickCount = 0;
+    int score = 0;
     String questionText, answerText, randAnswer;
-    Button next;
+    Button next, results;
     Button[] btns;
     TextView tv;
-    int clickCount = 0;
 
     Random r;
 
@@ -64,6 +66,8 @@ public class QuizMainActivity extends AppCompatActivity {
         btns[3] = (Button) findViewById(R.id.btn4);
 
         next = (Button) findViewById(R.id.nextQ);
+        results = (Button) findViewById(R.id.see_results);
+        results.setVisibility(View.INVISIBLE);
 
         getQuestionsAnswers();
         multipleChoiceQuiz();
@@ -78,14 +82,27 @@ public class QuizMainActivity extends AppCompatActivity {
                 }
 
                 clickCount++;
-
-                if(clickCount == NUM_QUESTIONS - 1) {
+                if (clickCount == NUM_QUESTIONS - 1) {
                     next.setOnClickListener(null);
+                    next.setEnabled(false);
+                    next.setVisibility(View.INVISIBLE);
+                    results.setVisibility(View.VISIBLE);
                 }
+            }
+        });
 
-                for(int i = 0; i < takenAnswers.size(); i++) {
-                    System.out.println(takenAnswers.get(i));
+        results.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(QuizMainActivity.this, ModuleActivity.class);
+                intent.putExtra("score", score);
+                double mark = score / NUM_QUESTIONS;
+                if(mark > 0.8) {
+                    intent.putExtra("pass", "pass");
+                } else {
+                    intent.putExtra("fail", "fail");
                 }
+                startActivity(intent);
             }
         });
 
@@ -97,11 +114,8 @@ public class QuizMainActivity extends AppCompatActivity {
     }
 
     public void multipleChoiceQuiz() {
-        mQnANum = r.nextInt(3 + 1);
-        while(takenAnswers.contains(mQnANum)) {
-            mQnANum = r.nextInt(3 + 1);
-        }
-        btnPlacementNum = r.nextInt(3 + 1);
+        mQnANum = r.nextInt(3 - 0 + 1) + 0;
+        btnPlacementNum = r.nextInt(3 - 0 + 1) + 0;
         if (btnPlacementNum == mQnANum) {
             btnPlacementNum = r.nextInt(4);
         }
@@ -113,11 +127,14 @@ public class QuizMainActivity extends AppCompatActivity {
 
         takenAnswers.add(mQnANum);
 
+        //RICHARD: This for loop randomises where answers are placed. I was unable to randomise it
+
         for (int i = 0; i < 20; i++) {
             mRandAnswer = r.nextInt(3 - 0 + 1) + 0;
             if (!btns[mRandAnswer].equals(answerText) && !takenAnswers.contains(mRandAnswer)) {
                 randAnswer = am.get(mRandAnswer).getmAnswers();
                 btns[mRandAnswer].setText(randAnswer);
+                //takenAnswers.add(mRandAnswer);
             }
 
         }
@@ -129,6 +146,7 @@ public class QuizMainActivity extends AppCompatActivity {
                 public void onClick(View v) {
                     if(btns[finalK].getText().toString().equals(answerText)) {
                         btns[finalK].setBackgroundColor(Color.GREEN);
+                        score++;
                         next.setVisibility(View.VISIBLE);
                     } else {
                         Animation shakeButton = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.shake);
@@ -136,7 +154,6 @@ public class QuizMainActivity extends AppCompatActivity {
                         btns[finalK].setBackgroundColor(Color.RED);
                         btns[mQnANum].setBackgroundColor(Color.GREEN);
                         next.setVisibility(View.VISIBLE);
-
                     }
                     for (int i = 0; i < btns.length; i++) {
                         btns[i].setEnabled(false);
@@ -148,15 +165,6 @@ public class QuizMainActivity extends AppCompatActivity {
 
 
     }
-
-
-
-
-
-
-
-
-
 }
 
 
