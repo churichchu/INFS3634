@@ -3,7 +3,7 @@
     <string name="mod">Modules</string>
     <string name="mod_desc">This video explains the difference\nbetween a primary key and foreign key\nA
         primary key uniquely identifies any \nrecord in a table, while a foreign key\n
-        is used to reference occurences of an \nentity in another table.</string>
+        is used to reference occurrences of an \nentity in another table.</string>
     <string name="desc">Description</string>
     <string name="vid_id">6feMtVOaSy4</string>
     <string name="init_success">YouTube player initialized successfully</string>
@@ -13,6 +13,10 @@
     <string name="thumbnail_fail">The YouTube thumbnail failed to load.</string>
     <string name="back">Go Back</string>
     <string name="start">start</string>
+    <string name="Incorrect">Incorrect</string>
+    <string name="Correct">Correct</string>
+    <string name="next">next</string>
+    <string name="modules">Modules</string>
 
     <string-array name="moduleTitles">
         <item>Module 1: Database Fundamentals</item>
@@ -68,5 +72,7 @@
         <item>12:29</item>
         <item>9:56</item>
     </string-array>
+
+
 
 </resources>

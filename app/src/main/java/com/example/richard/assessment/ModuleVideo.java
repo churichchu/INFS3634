@@ -31,8 +31,8 @@ public class ModuleVideo extends YouTubeBaseActivity {
         moduleDesc = (TextView) findViewById(R.id.mod_desc);
         moduleDesc.setText(getIntent().getStringExtra("mod_desc"));
         proc_mcq = (Button) findViewById(R.id.proc_mcq);
-        proc_mcq.setVisibility(View.INVISIBLE);
-        back = (Button) findViewById(R.id.backBtn);
+        proc_mcq.setEnabled(false);
+        back = (Button) findViewById(R.id.back);
 
         proc_mcq.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -122,7 +122,7 @@ public class ModuleVideo extends YouTubeBaseActivity {
 
         @Override
         public void onVideoEnded() {
-            proc_mcq.setVisibility(View.VISIBLE);
+            proc_mcq.setEnabled(true);
         }
 
         @Override
