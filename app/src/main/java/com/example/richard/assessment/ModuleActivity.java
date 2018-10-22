@@ -53,11 +53,11 @@ public class ModuleActivity extends AppCompatActivity {
         i = getIntent();
 
         if(i != null) {
-            if(i.getExtras().equals("fail")) {
+            if(i.getStringExtra("fails").equals(true)) {
                 getFeedback().show();
                 setButtonText();
             }
-            else if(i.getExtras().equals("pass")) {
+            else if(i.getStringExtra("pass").equals(true)) {
                 getFeedback().show();
                 setButtonText();
                 pass1.setVisibility(View.VISIBLE);
@@ -65,7 +65,7 @@ public class ModuleActivity extends AppCompatActivity {
                 pass3.setVisibility(View.VISIBLE);
                 pass4.setVisibility(View.VISIBLE);
             }
-            else if(i.getExtras().equals(null)) {
+            else {
                 setButtonText();
             }
         }
@@ -130,9 +130,9 @@ public class ModuleActivity extends AppCompatActivity {
     public AlertDialog.Builder getFeedback() {
         AlertDialog.Builder feedback = new AlertDialog.Builder(this);
         feedback.setTitle(getString(R.string.mcq_results));
-        if(i.getExtras().equals("pass")) {
+        if(i.getStringExtra("pass").equals(true)) {
             feedback.setMessage(getString(R.string.Pass_MCQ));
-        } else if (i.getExtras().equals("fail")) {
+        } else if (i.getStringExtra("fail").equals(true)) {
             feedback.setMessage(getString(R.string.module_fail));
         }
         feedback.setPositiveButton("OK", null);

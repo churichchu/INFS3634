@@ -66,6 +66,7 @@ public class QuizMainActivity extends AppCompatActivity {
         btns[3] = (Button) findViewById(R.id.btn4);
 
         next = (Button) findViewById(R.id.nextQ);
+        next.setEnabled(false);
         results = (Button) findViewById(R.id.see_results);
         results.setVisibility(View.INVISIBLE);
 
@@ -114,8 +115,11 @@ public class QuizMainActivity extends AppCompatActivity {
     }
 
     public void multipleChoiceQuiz() {
-        mQnANum = r.nextInt(3 - 0 + 1) + 0;
-        btnPlacementNum = r.nextInt(3 - 0 + 1) + 0;
+        mQnANum = r.nextInt(3 + 1);
+        while(takenAnswers.contains(mQnANum)) {
+            mQnANum = r.nextInt(3 + 1);
+        }
+        btnPlacementNum = r.nextInt(3 + 1);
         if (btnPlacementNum == mQnANum) {
             btnPlacementNum = r.nextInt(4);
         }
@@ -144,13 +148,13 @@ public class QuizMainActivity extends AppCompatActivity {
                     if(btns[finalK].getText().toString().equals(answerText)) {
                         btns[finalK].setBackgroundColor(Color.GREEN);
                         score++;
-                        next.setVisibility(View.VISIBLE);
+                        next.setEnabled(true);
                     } else {
                         Animation shakeButton = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.shake);
                         btns[mQnANum].startAnimation(shakeButton);
                         btns[finalK].setBackgroundColor(Color.RED);
                         btns[mQnANum].setBackgroundColor(Color.GREEN);
-                        next.setVisibility(View.VISIBLE);
+                        next.setEnabled(true);
                     }
                     for (int i = 0; i < btns.length; i++) {
                         btns[i].setEnabled(false);
