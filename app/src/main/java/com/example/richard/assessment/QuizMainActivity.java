@@ -76,6 +76,8 @@ public class QuizMainActivity extends AppCompatActivity {
         next.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                takenAnswers.clear();
+                mQnANum = 0;
                 multipleChoiceQuiz();
                 for(int i = 0; i < NUM_ANSWERS; i++) {
                     btns[i].setEnabled(true);
@@ -115,6 +117,8 @@ public class QuizMainActivity extends AppCompatActivity {
     }
 
     public void multipleChoiceQuiz() {
+        //ensure same question is not shown twice
+        //issue is that last question is always the same as the first
         mQnANum = r.nextInt(3 + 1);
         while(takenAnswers.contains(mQnANum)) {
             mQnANum = r.nextInt(3 + 1);
@@ -126,19 +130,54 @@ public class QuizMainActivity extends AppCompatActivity {
         questionText = qm.get(mQnANum).getmQuestion();
         answerText = am.get(mQnANum).getmAnswers();
 
-        btns[mQnANum].setText(answerText);
+
         tv.setText(questionText);
 
         takenAnswers.add(mQnANum);
 
-        for (int i = 0; i < 20; i++) {
-            mRandAnswer = r.nextInt(3 - 0 + 1) + 0;
-            if (!btns[mRandAnswer].equals(answerText) && !takenAnswers.contains(mRandAnswer)) {
-                randAnswer = am.get(mRandAnswer).getmAnswers();
-                btns[mRandAnswer].setText(randAnswer);
-            }
 
+        //randomise Answers
+        for (int i = 0; i < NUM_ANSWERS; i++) {
+            if(i == mQnANum) {
+                btns[i].setText(answerText);
+            } else {
+                mRandAnswer = r.nextInt(3 + 1);
+                while(takenAnswers.contains(mRandAnswer)) {
+                    mRandAnswer = r.nextInt(3 + 1);
+                }
+                btns[i].setText(am.get(mRandAnswer).getmAnswers());
+                takenAnswers.add(mRandAnswer);
+            }
         }
+        /*for (int j = 0; j < NUM_ANSWERS; j++) {
+            while (r.nextInt(3 + 1) == mQnANum) {
+                mRandAnswer = r.nextInt(3 + 1);
+            }
+            takenAnswers.add(mRandAnswer);
+            if (j != mQnANum) {
+                btns[j].setText(am.get(mRandAnswer).getmAnswers());
+                mRandAnswer = r.nextInt(3 + 1);
+            } else {
+                j--;
+            }
+        }*/
+
+
+        /*mRandAnswer = r.nextInt(3+1);
+        if()
+        while(mRandAnswer == mQnANum) {
+            mRandAnswer = r.nextInt(3 + 1);
+        }
+
+        btns[mRandAnswer].setText(am.get(mRandAnswer).getmAnswers());
+
+            for(int j = 0; j < NUM_ANSWERS; j++) {
+                if (!btns[j].equals(answerText) && j != mRandAnswer) {
+                    randAnswer = am.get(mRandAnswer).getmAnswers();
+                    btns[j].setText(randAnswer);
+                }
+            }
+        }*/
 
         for(int k = 0; k < btns.length; k++) {
             final int finalK = k;
