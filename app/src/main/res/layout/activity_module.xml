@@ -35,9 +35,9 @@
         android:layout_marginBottom="512dp"
         android:background="@android:color/white"
         android:onClick="onBack"
-        android:text="<"
+        android:text="@string/back"
         android:textColor="@android:color/holo_orange_light"
-        android:textSize="36sp"
+        android:textSize="18sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
 
