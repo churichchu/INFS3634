@@ -17,6 +17,12 @@
     <string name="Correct">Correct</string>
     <string name="next">next</string>
     <string name="modules">Modules</string>
+    <string name="see_results">See Results</string>
+    <string name="nextQ">Next Question</string>
+    <string name="pass">pass</string>
+    <string name="Pass_MCQ">You passed! Congratulations! You may move on to the next module</string>
+    <string name="mcq_results">Multiple Choice Results</string>
+    <string name="module_fail">You did not pass the module. Please try again.</string>
 
     <string-array name="moduleTitles">
         <item>Module 1: Database Fundamentals</item>

@@ -1,5 +1,6 @@
 package com.example.richard.assessment;
 
+import android.app.AlertDialog;
 import android.content.Intent;
 import android.content.res.Resources;
 import android.support.v7.app.AppCompatActivity;
@@ -19,6 +20,9 @@ public class ModuleActivity extends AppCompatActivity {
     TextView modules;
     List<String> buttonText;
     VideoModel vidModel;
+    ImageView pass1, pass2, pass3, pass4;
+
+    Intent i;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,7 +39,36 @@ public class ModuleActivity extends AppCompatActivity {
         mod3 = (Button) findViewById(R.id.mod3);
         mod4 = (Button) findViewById(R.id.mod4);
 
-        setButtonText();
+        pass1 = (ImageView) findViewById(R.id.pass1);
+        pass2 = (ImageView) findViewById(R.id.pass2);
+        pass3 = (ImageView) findViewById(R.id.pass3);
+        pass4 = (ImageView) findViewById(R.id.pass4);
+
+        pass1.setVisibility(View.INVISIBLE);
+        pass2.setVisibility(View.INVISIBLE);
+        pass3.setVisibility(View.INVISIBLE);
+        pass4.setVisibility(View.INVISIBLE);
+
+
+        i = getIntent();
+
+        if(i != null) {
+            if(i.getStringExtra("fails").equals(true)) {
+                getFeedback().show();
+                setButtonText();
+            }
+            else if(i.getStringExtra("pass").equals(true)) {
+                getFeedback().show();
+                setButtonText();
+                pass1.setVisibility(View.VISIBLE);
+                pass2.setVisibility(View.VISIBLE);
+                pass3.setVisibility(View.VISIBLE);
+                pass4.setVisibility(View.VISIBLE);
+            }
+            else {
+                setButtonText();
+            }
+        }
 
     }
 
@@ -93,4 +126,20 @@ public class ModuleActivity extends AppCompatActivity {
         this.startActivity(i);
 
     }
+
+    public AlertDialog.Builder getFeedback() {
+        AlertDialog.Builder feedback = new AlertDialog.Builder(this);
+        feedback.setTitle(getString(R.string.mcq_results));
+        if(i.getStringExtra("pass").equals(true)) {
+            feedback.setMessage(getString(R.string.Pass_MCQ));
+        } else if (i.getStringExtra("fail").equals(true)) {
+            feedback.setMessage(getString(R.string.module_fail));
+        }
+        feedback.setPositiveButton("OK", null);
+        feedback.setCancelable(true);
+        feedback.create();
+        return feedback;
+    }
+
+
 }

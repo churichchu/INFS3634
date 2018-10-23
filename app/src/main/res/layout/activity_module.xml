@@ -60,68 +60,122 @@
 
     <Button
         android:id="@+id/mod1"
-        android:layout_width="358dp"
+        android:layout_width="228dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginLeft="8dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginRight="8dp"
-        android:layout_marginBottom="32dp"
+        android:layout_marginStart="24dp"
+        android:layout_marginLeft="24dp"
+        android:layout_marginBottom="36dp"
         android:background="@android:color/holo_blue_light"
-        android:textColor="@android:color/white"
         android:onClick="onButtonClick"
+        android:textColor="@android:color/white"
         app:layout_constraintBottom_toTopOf="@+id/mod2"
-        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
 
     <Button
         android:id="@+id/mod2"
-        android:layout_width="354dp"
+        android:layout_width="228dp"
         android:layout_height="wrap_content"
+        android:layout_marginStart="24dp"
+        android:layout_marginLeft="24dp"
+        android:layout_marginBottom="32dp"
+        android:background="@android:color/holo_blue_light"
+        android:onClick="onButtonClick"
+        android:textColor="@android:color/white"
+        app:layout_constraintBottom_toTopOf="@+id/mod3"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <Button
+        android:id="@+id/mod3"
+        android:layout_width="228dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="24dp"
+        android:layout_marginLeft="24dp"
+        android:layout_marginBottom="32dp"
+        android:background="@android:color/holo_blue_light"
+        android:onClick="onButtonClick"
+        android:textColor="@android:color/white"
+        app:layout_constraintBottom_toTopOf="@+id/mod4"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <Button
+        android:id="@+id/mod4"
+        android:layout_width="228dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="24dp"
+        android:layout_marginLeft="24dp"
+        android:layout_marginBottom="88dp"
+        android:background="@android:color/holo_blue_light"
+        android:onClick="onButtonClick"
+        android:textColor="@android:color/white"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <ImageView
+        android:id="@+id/pass1"
+        android:layout_width="55dp"
+        android:layout_height="50dp"
         android:layout_marginStart="8dp"
         android:layout_marginLeft="8dp"
         android:layout_marginEnd="8dp"
         android:layout_marginRight="8dp"
         android:layout_marginBottom="32dp"
-        android:background="@android:color/holo_blue_light"
-        android:textColor="@android:color/white"
-        android:onClick="onButtonClick"
-        app:layout_constraintBottom_toTopOf="@+id/mod3"
+        android:contentDescription="@string/pass"
+        android:src="@drawable/green_tick"
+        app:layout_constraintBottom_toTopOf="@+id/pass2"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.571"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintHorizontal_bias="0.508"
+        app:layout_constraintStart_toEndOf="@+id/mod1"
+        app:srcCompat="@drawable/green_tick" />
 
-    <Button
-        android:id="@+id/mod3"
-        android:layout_width="354dp"
-        android:layout_height="wrap_content"
+    <ImageView
+        android:id="@+id/pass2"
+        android:layout_width="55dp"
+        android:layout_height="50dp"
         android:layout_marginStart="8dp"
         android:layout_marginLeft="8dp"
         android:layout_marginEnd="8dp"
         android:layout_marginRight="8dp"
-        android:layout_marginBottom="28dp"
-        android:background="@android:color/holo_blue_light"
-        android:textColor="@android:color/white"
-        android:onClick="onButtonClick"
-        app:layout_constraintBottom_toTopOf="@+id/mod4"
+        android:layout_marginBottom="32dp"
+        android:contentDescription="@string/pass"
+        android:src="@drawable/green_tick"
+        app:layout_constraintBottom_toTopOf="@+id/pass3"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.357"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintHorizontal_bias="0.508"
+        app:layout_constraintStart_toEndOf="@+id/mod1"
+        app:srcCompat="@drawable/green_tick" />
 
-    <Button
-        android:id="@+id/mod4"
-        android:layout_width="354dp"
-        android:layout_height="wrap_content"
+    <ImageView
+        android:id="@+id/pass3"
+        android:layout_width="55dp"
+        android:layout_height="50dp"
         android:layout_marginStart="8dp"
         android:layout_marginLeft="8dp"
         android:layout_marginEnd="8dp"
         android:layout_marginRight="8dp"
-        android:layout_marginBottom="92dp"
-        android:background="@android:color/holo_blue_light"
-        android:textColor="@android:color/white"
-        android:onClick="onButtonClick"
+        android:layout_marginBottom="32dp"
+        android:contentDescription="@string/pass"
+        android:src="@drawable/green_tick"
+        app:layout_constraintBottom_toTopOf="@+id/pass4"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.508"
+        app:layout_constraintStart_toEndOf="@+id/mod1"
+        app:srcCompat="@drawable/green_tick" />
+
+    <ImageView
+        android:id="@+id/pass4"
+        android:layout_width="55dp"
+        android:layout_height="50dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginRight="8dp"
+        android:layout_marginBottom="88dp"
+        android:contentDescription="@string/pass"
+        android:src="@drawable/green_tick"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintHorizontal_bias="0.508"
+        app:layout_constraintStart_toEndOf="@+id/mod1"
+        app:srcCompat="@drawable/green_tick" />
 
 </android.support.constraint.ConstraintLayout>

@@ -1,5 +1,6 @@
 package com.example.richard.assessment;
 
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.Build;
 import android.support.annotation.RequiresApi;
@@ -18,12 +19,21 @@ import java.util.concurrent.ThreadLocalRandom;
 
 public class QuizMainActivity extends AppCompatActivity {
 
-    int questionSelect;
     final int NUM_ANSWERS = 4;
-    int mQnANum;
-    String answerText;
-    Button next;
+    final int NUM_QUESTIONS = 4;
+    int mQnANum, btnPlacementNum, mRandAnswer;
+    int clickCount = 0;
+    int score = 0;
+    String questionText, answerText, randAnswer;
+    Button next, results;
+    Button[] btns;
+    TextView tv;
 
+    Random r;
+
+    ArrayList<QuestionsModel> qm = new ArrayList<>();
+    ArrayList<AnswersModel> am = new ArrayList<>();
+    ArrayList<Integer> takenAnswers = new ArrayList<Integer>();
 
 
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
@@ -33,99 +43,142 @@ public class QuizMainActivity extends AppCompatActivity {
         setContentView(R.layout.quiz_activity_main);
 
         //retrieved questions array list
-        ArrayList<QuestionsModel> qm = new ArrayList<>();
-        qm = QandADatabase.getQuestionsArrayList();
+
+
 
         //retrieved answers array list
-        ArrayList<AnswersModel> am = new ArrayList<>();
-        am = QandADatabase.getAnswersArrayList();
+
 
         //Random Number generator for Questions and Answers
         //r2 is meant for generating random incorrect answers when making mcq
 
-        Random r = new Random();
-        Random r2 = new Random();
-        Random r3 = new Random();
+        r = new Random();
+        //Random r2 = new Random();
+        //Random r3 = new Random();
 
-        mQnANum = r.nextInt(3 - 0 + 1) + 0;
-        int btnPlacementNum = r2.nextInt(3 - 0 + 1) + 0;
+        tv = findViewById(R.id.questionText);
 
 
-        //IF statement so that random mcq answers cannot
-        //be placed int he same box as the correct answer
-        if (btnPlacementNum == mQnANum) {
-            btnPlacementNum = r3.nextInt(4);
-        }
-
-        //Buttons array to randomly place answers for generated questions
-        final Button[] btns = new Button[4];
+        btns = new Button[4];
         btns[0] = (Button) findViewById(R.id.btn1);
         btns[1] = (Button) findViewById(R.id.btn2);
         btns[2] = (Button) findViewById(R.id.btn3);
         btns[3] = (Button) findViewById(R.id.btn4);
 
         next = (Button) findViewById(R.id.nextQ);
+        next.setEnabled(false);
+        results = (Button) findViewById(R.id.see_results);
+        results.setVisibility(View.INVISIBLE);
 
-        String questionText = qm.get(mQnANum).getmQuestion();
+        getQuestionsAnswers();
+        multipleChoiceQuiz();
+
+        next.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                takenAnswers.clear();
+                mQnANum = 0;
+                multipleChoiceQuiz();
+                for(int i = 0; i < NUM_ANSWERS; i++) {
+                    btns[i].setEnabled(true);
+                    btns[i].setBackgroundResource(android.R.drawable.btn_default);
+                }
+
+                clickCount++;
+                if (clickCount == NUM_QUESTIONS - 1) {
+                    next.setOnClickListener(null);
+                    next.setEnabled(false);
+                    next.setVisibility(View.INVISIBLE);
+                    results.setVisibility(View.VISIBLE);
+                }
+            }
+        });
+
+        results.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(QuizMainActivity.this, ModuleActivity.class);
+                intent.putExtra("score", score);
+                double mark = score / NUM_QUESTIONS;
+                if(mark > 0.8) {
+                    intent.putExtra("pass", "pass");
+                } else {
+                    intent.putExtra("fail", "fail");
+                }
+                startActivity(intent);
+            }
+        });
+
+    }
+
+    public void getQuestionsAnswers() {
+        qm = QandADatabase.getQuestionsArrayList();
+        am = QandADatabase.getAnswersArrayList();
+    }
+
+    public void multipleChoiceQuiz() {
+        //ensure same question is not shown twice
+        //issue is that last question is always the same as the first
+        mQnANum = r.nextInt(3 + 1);
+        while(takenAnswers.contains(mQnANum)) {
+            mQnANum = r.nextInt(3 + 1);
+        }
+        btnPlacementNum = r.nextInt(3 + 1);
+        if (btnPlacementNum == mQnANum) {
+            btnPlacementNum = r.nextInt(4);
+        }
+        questionText = qm.get(mQnANum).getmQuestion();
         answerText = am.get(mQnANum).getmAnswers();
-        String randAnswer;
 
-        Button btn = btns[mQnANum];
-        btn.setText(answerText);
 
-        TextView tv = findViewById(R.id.questionText);
         tv.setText(questionText);
 
-        //populate answers
-        ArrayList<Integer> randNums = new ArrayList<Integer>();
-        btns[mQnANum].setText(answerText);
-        randNums.add(mQnANum);
-        //int i = 0;
-        /*while (i < btns.length) {
-            int mRandAnswer = r.nextInt(3 - 0 + 1) + 0;
-        }*/
-        int mRandAnswer = 0;
-        for(int i = 0; i < 20; i++) {
-            mRandAnswer = r.nextInt(3 - 0 + 1) + 0;
-            if (!btns[mRandAnswer].equals(answerText) && !randNums.contains(mRandAnswer)) {
-                randAnswer = am.get(mRandAnswer).getmAnswers();
-                btns[mRandAnswer].setText(randAnswer);
-                randNums.add(mRandAnswer);
-            }
-
-        }
+        takenAnswers.add(mQnANum);
 
 
-
-        //IF statement to make sure random generated answers
-        //are not the same as the correct answer nor previously
-        //generated ones
-        //int randomNum = ThreadLocalRandom.current().nextInt(am.get(0).getId(), btns.length + 1);
-
-
-
-
-
-        /*Button randBtn = btns[btnPlacementNum];
-        for(int i = 1; i < btns.length; i++) {
-
-            if (btns[btnPlacementNum].getText().equals("Button")) {
-                randBtn.setText(randAnswer);
-                takenAnswers.add(randAnswer);
-            }
-            else{
-
-                btnPlacementNum = r3.nextInt(4);
-                i--;
-
+        //randomise Answers *WORKS*
+        for (int i = 0; i < NUM_ANSWERS; i++) {
+            if(i == mQnANum) {
+                btns[i].setText(answerText);
+            } else {
+                mRandAnswer = r.nextInt(3 + 1);
+                while(takenAnswers.contains(mRandAnswer)) {
+                    mRandAnswer = r.nextInt(3 + 1);
+                }
+                btns[i].setText(am.get(mRandAnswer).getmAnswers());
+                takenAnswers.add(mRandAnswer);
             }
         }
-
-        for(int i = 0; i < btns.length; i++){
-            if(takenAnswers.contains(randAnswer)){
-
+        /*for (int j = 0; j < NUM_ANSWERS; j++) {
+            while (r.nextInt(3 + 1) == mQnANum) {
+                mRandAnswer = r.nextInt(3 + 1);
+            }
+            takenAnswers.add(mRandAnswer);
+            if (j != mQnANum) {
+                btns[j].setText(am.get(mRandAnswer).getmAnswers());
+                mRandAnswer = r.nextInt(3 + 1);
+            } else {
+                j--;
             }
         }*/
+
+
+        /*mRandAnswer = r.nextInt(3+1);
+        if()
+        while(mRandAnswer == mQnANum) {
+            mRandAnswer = r.nextInt(3 + 1);
+        }
+
+        btns[mRandAnswer].setText(am.get(mRandAnswer).getmAnswers());
+
+            for(int j = 0; j < NUM_ANSWERS; j++) {
+                if (!btns[j].equals(answerText) && j != mRandAnswer) {
+                    randAnswer = am.get(mRandAnswer).getmAnswers();
+                    btns[j].setText(randAnswer);
+                }
+            }
+        }*/
+
         for(int k = 0; k < btns.length; k++) {
             final int finalK = k;
             btns[k].setOnClickListener(new View.OnClickListener() {
@@ -133,14 +186,14 @@ public class QuizMainActivity extends AppCompatActivity {
                 public void onClick(View v) {
                     if(btns[finalK].getText().toString().equals(answerText)) {
                         btns[finalK].setBackgroundColor(Color.GREEN);
-                        next.setVisibility(View.VISIBLE);
+                        score++;
+                        next.setEnabled(true);
                     } else {
                         Animation shakeButton = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.shake);
                         btns[mQnANum].startAnimation(shakeButton);
                         btns[finalK].setBackgroundColor(Color.RED);
                         btns[mQnANum].setBackgroundColor(Color.GREEN);
-                        next.setVisibility(View.VISIBLE);
-
+                        next.setEnabled(true);
                     }
                     for (int i = 0; i < btns.length; i++) {
                         btns[i].setEnabled(false);
@@ -151,11 +204,7 @@ public class QuizMainActivity extends AppCompatActivity {
         }
 
 
-
     }
-
-
-
 }
 
 
