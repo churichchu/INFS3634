@@ -1,9 +1,9 @@
 <resources>
     <string name="app_name">myModule</string>
     <string name="mod">Modules</string>
-    <string name="mod_desc">This video explains the difference\nbetween a primary key and foreign key\nA
-        primary key uniquely identifies any \nrecord in a table, while a foreign key\n
-        is used to reference occurrences of an \nentity in another table.</string>
+    <string name="mod_desc">This video explains the difference between a primary key and foreign key. A
+        primary key uniquely identifies any record in a table, while a foreign key
+        is used to reference occurrences of an entity in another table.</string>
     <string name="desc">Description</string>
     <string name="vid_id">6feMtVOaSy4</string>
     <string name="init_success">YouTube player initialized successfully</string>
@@ -55,7 +55,7 @@
     <string-array name="moduleDescriptions">
         <item>Learn about tables, primary keys, foreign keys \nand relationships.</item>
         <item>Learn about entity relationship diagrams and\nrelational models.</item>
-        <item>Learn how to create a database in SQL\n using the CREATE TABLE Statement and \nthe INSERT INTO Statement.</item>
+        <item>Learn how to create a database in SQL using the CREATE TABLE Statement and the INSERT INTO Statement.</item>
         <item>Learn about different statements you can\n use to query the database, such as\n SELECT and UPDATE statements.</item>
     </string-array>
 
