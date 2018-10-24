@@ -14,19 +14,28 @@
         <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
         <activity android:name=".ModuleActivity" />
+            <intent-filter>
+                <action android:name="android.intent.action.ModuleActivity"/>
+                <category android:name="android.intent.category.LAUNCHER"/>
+            </intent-filter>
+
         <activity android:name=".ModuleVideo" />
+            <intent-filter>
+                <action android:name=".android.intent.action.MAIN"/>
+                <category android:name="android.intent.category.LAUNCHER"/>
+            </intent-filter>
+
         <activity android:name=".QuizMainActivity">
             <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
+                <action android:name="android.intent.action.MAIN"/>
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+
         </activity>
     </application>
-
 </manifest>

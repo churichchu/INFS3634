@@ -42,11 +42,6 @@ public class QuizMainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.quiz_activity_main);
 
-        //retrieved questions array list
-
-
-
-        //retrieved answers array list
 
 
         //Random Number generator for Questions and Answers
