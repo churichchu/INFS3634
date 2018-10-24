@@ -23,6 +23,7 @@
     <string name="Pass_MCQ">You passed! Congratulations! You may move on to the next module</string>
     <string name="mcq_results">Multiple Choice Results</string>
     <string name="module_fail">You did not pass the module. Please try again.</string>
+    <string name="vid_incomplete">You must first finish watching the video before progressing to the multiple choice quiz</string>
 
     <string-array name="moduleTitles">
         <item>Module 1: Database Fundamentals</item>

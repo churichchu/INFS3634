@@ -1,9 +1,11 @@
 package com.example.richard.assessment;
 
 import android.content.Intent;
-import android.support.v7.app.AppCompatActivity;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.view.View;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -17,7 +19,7 @@ public class ModuleVideo extends YouTubeBaseActivity {
 
     private YouTubePlayerView youTubeView;
     private TextView moduleName, moduleDesc;
-    private Button proc_mcq, back;
+    private Button proc_mcq, back, invis;
     private final int RECOVERY_REQUEST = 1;
 
     @Override
@@ -34,6 +36,7 @@ public class ModuleVideo extends YouTubeBaseActivity {
         proc_mcq.setEnabled(false);
         back = (Button) findViewById(R.id.back);
 
+
         proc_mcq.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -41,6 +44,7 @@ public class ModuleVideo extends YouTubeBaseActivity {
                 startActivity(i);
             }
         });
+
 
         back.setOnClickListener(new View.OnClickListener() {
             @Override

@@ -21,14 +21,13 @@ public class ModuleActivity extends AppCompatActivity {
     List<String> buttonText;
     VideoModel vidModel;
     ImageView pass1, pass2, pass3, pass4;
-
-    Intent i;
+    AlertDialog.Builder feedback;
+    Intent intent;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_module);
-
         back = (Button) findViewById(R.id.back);
         name = (TextView) findViewById(R.id.app_name);
         modules = (TextView) findViewById(R.id.modules);
@@ -49,27 +48,20 @@ public class ModuleActivity extends AppCompatActivity {
         pass3.setVisibility(View.INVISIBLE);
         pass4.setVisibility(View.INVISIBLE);
 
+        intent = getIntent();
 
-        i = getIntent();
-
-        if(i != null) {
-            if(i.getStringExtra("fails").equals(true)) {
-                getFeedback().show();
-                setButtonText();
-            }
-            else if(i.getStringExtra("pass").equals(true)) {
-                getFeedback().show();
-                setButtonText();
+        if(intent != null) {
+            setButtonText();
+            if(intent.hasExtra("pass")) {
                 pass1.setVisibility(View.VISIBLE);
                 pass2.setVisibility(View.VISIBLE);
                 pass3.setVisibility(View.VISIBLE);
                 pass4.setVisibility(View.VISIBLE);
             }
-            else {
-                setButtonText();
+            else if (intent.hasExtra("fail")) {
+                getFeedback();
             }
         }
-
     }
 
     public void setButtonText() {
@@ -128,16 +120,16 @@ public class ModuleActivity extends AppCompatActivity {
     }
 
     public AlertDialog.Builder getFeedback() {
-        AlertDialog.Builder feedback = new AlertDialog.Builder(this);
+        feedback = new AlertDialog.Builder(this);
         feedback.setTitle(getString(R.string.mcq_results));
-        if(i.getStringExtra("pass").equals(true)) {
+        if(intent.hasExtra("pass")) {
             feedback.setMessage(getString(R.string.Pass_MCQ));
-        } else if (i.getStringExtra("fail").equals(true)) {
+        } else if (intent.hasExtra("fail")) {
             feedback.setMessage(getString(R.string.module_fail));
         }
         feedback.setPositiveButton("OK", null);
         feedback.setCancelable(true);
-        feedback.create();
+        feedback.create().show();
         return feedback;
     }
 

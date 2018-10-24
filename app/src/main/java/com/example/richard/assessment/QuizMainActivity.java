@@ -21,9 +21,11 @@ public class QuizMainActivity extends AppCompatActivity {
 
     final int NUM_ANSWERS = 4;
     final int NUM_QUESTIONS = 4;
+    final double passMark = 0.8;
     int mQnANum, btnPlacementNum, mRandAnswer;
     int clickCount = 0;
     int score = 0;
+
     String questionText, answerText, randAnswer;
     Button next, results;
     Button[] btns;
@@ -51,7 +53,6 @@ public class QuizMainActivity extends AppCompatActivity {
         //Random r2 = new Random();
         //Random r3 = new Random();
 
-        tv = findViewById(R.id.questionText);
 
 
         btns = new Button[4];
@@ -67,6 +68,13 @@ public class QuizMainActivity extends AppCompatActivity {
 
         getQuestionsAnswers();
         multipleChoiceQuiz();
+
+        //selectQuestion();
+        //populateAnswers();
+        //getSelectedAnswer();
+        //checkSelectedAnswer();
+
+
 
         next.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -89,13 +97,37 @@ public class QuizMainActivity extends AppCompatActivity {
             }
         });
 
+        for(int k = 0; k < btns.length; k++) {
+            final int finalK = k;
+            btns[k].setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if(btns[finalK].getText().toString().equals(answerText)) {
+                        btns[finalK].setBackgroundColor(Color.GREEN);
+                        score++;
+                        next.setEnabled(true);
+                    } else {
+                        Animation shakeButton = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.shake);
+                        btns[mQnANum].startAnimation(shakeButton);
+                        btns[finalK].setBackgroundColor(Color.RED);
+                        btns[mQnANum].setBackgroundColor(Color.GREEN);
+                        next.setEnabled(true);
+                    }
+                    for (int i = 0; i < btns.length; i++) {
+                        btns[i].setEnabled(false);
+
+                    }
+                }
+            });
+        }
+
         results.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(QuizMainActivity.this, ModuleActivity.class);
                 intent.putExtra("score", score);
                 double mark = score / NUM_QUESTIONS;
-                if(mark > 0.8) {
+                if(mark >= passMark) {
                     intent.putExtra("pass", "pass");
                 } else {
                     intent.putExtra("fail", "fail");
@@ -174,29 +206,6 @@ public class QuizMainActivity extends AppCompatActivity {
             }
         }*/
 
-        for(int k = 0; k < btns.length; k++) {
-            final int finalK = k;
-            btns[k].setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    if(btns[finalK].getText().toString().equals(answerText)) {
-                        btns[finalK].setBackgroundColor(Color.GREEN);
-                        score++;
-                        next.setEnabled(true);
-                    } else {
-                        Animation shakeButton = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.shake);
-                        btns[mQnANum].startAnimation(shakeButton);
-                        btns[finalK].setBackgroundColor(Color.RED);
-                        btns[mQnANum].setBackgroundColor(Color.GREEN);
-                        next.setEnabled(true);
-                    }
-                    for (int i = 0; i < btns.length; i++) {
-                        btns[i].setEnabled(false);
-
-                    }
-                }
-            });
-        }
 
 
     }
