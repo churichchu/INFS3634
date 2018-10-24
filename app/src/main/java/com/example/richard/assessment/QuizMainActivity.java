@@ -44,14 +44,14 @@ public class QuizMainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.quiz_activity_main);
 
-
-
-        //Random Number generator for Questions and Answers
-        //r2 is meant for generating random incorrect answers when making mcq
-
+        //random number generators
         r = new Random();
-        //Random r2 = new Random();
-        //Random r3 = new Random();
+        Random r2 = new Random();
+        Random r3 = new Random();
+
+        //Question and answer array lists
+        qm = QandADatabase.getQuestionsArrayList();
+        am = QandADatabase.getAnswersArrayList();
 
 
 
@@ -61,13 +61,15 @@ public class QuizMainActivity extends AppCompatActivity {
         btns[2] = (Button) findViewById(R.id.btn3);
         btns[3] = (Button) findViewById(R.id.btn4);
 
-        next = (Button) findViewById(R.id.nextQ);
+
+
+        /*next = (Button) findViewById(R.id.nextQ);
         next.setEnabled(false);
         results = (Button) findViewById(R.id.see_results);
-        results.setVisibility(View.INVISIBLE);
+        results.setVisibility(View.INVISIBLE);*/
 
-        getQuestionsAnswers();
-        multipleChoiceQuiz();
+        //getQuestionsAnswers();
+        //multipleChoiceQuiz();
 
         //selectQuestion();
         //populateAnswers();
@@ -75,8 +77,8 @@ public class QuizMainActivity extends AppCompatActivity {
         //checkSelectedAnswer();
 
 
-
-        next.setOnClickListener(new View.OnClickListener() {
+        //comment out start HERE*******************
+        /* next.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 takenAnswers.clear();
@@ -95,9 +97,9 @@ public class QuizMainActivity extends AppCompatActivity {
                     results.setVisibility(View.VISIBLE);
                 }
             }
-        });
+        });*/
 
-        for(int k = 0; k < btns.length; k++) {
+        /*for(int k = 0; k < btns.length; k++) {
             final int finalK = k;
             btns[k].setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -118,10 +120,10 @@ public class QuizMainActivity extends AppCompatActivity {
 
                     }
                 }
-            });
+            });*/
         }
 
-        results.setOnClickListener(new View.OnClickListener() {
+        /*results.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(QuizMainActivity.this, ModuleActivity.class);
@@ -134,16 +136,15 @@ public class QuizMainActivity extends AppCompatActivity {
                 }
                 startActivity(intent);
             }
-        });
+        });*/
 
     }
 
-    public void getQuestionsAnswers() {
-        qm = QandADatabase.getQuestionsArrayList();
-        am = QandADatabase.getAnswersArrayList();
-    }
 
-    public void multipleChoiceQuiz() {
+
+
+
+    /*public void multipleChoiceQuiz() {
         //ensure same question is not shown twice
         //issue is that last question is always the same as the first
         mQnANum = r.nextInt(3 + 1);
@@ -175,7 +176,8 @@ public class QuizMainActivity extends AppCompatActivity {
                 btns[i].setText(am.get(mRandAnswer).getmAnswers());
                 takenAnswers.add(mRandAnswer);
             }
-        }
+        }*/
+
         /*for (int j = 0; j < NUM_ANSWERS; j++) {
             while (r.nextInt(3 + 1) == mQnANum) {
                 mRandAnswer = r.nextInt(3 + 1);

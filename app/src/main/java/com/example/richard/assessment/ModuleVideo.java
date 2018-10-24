@@ -33,7 +33,7 @@ public class ModuleVideo extends YouTubeBaseActivity {
         moduleDesc = (TextView) findViewById(R.id.mod_desc);
         moduleDesc.setText(getIntent().getStringExtra("mod_desc"));
         proc_mcq = (Button) findViewById(R.id.proc_mcq);
-        proc_mcq.setEnabled(false);
+        proc_mcq.setEnabled(true);
         back = (Button) findViewById(R.id.back);
 
 
