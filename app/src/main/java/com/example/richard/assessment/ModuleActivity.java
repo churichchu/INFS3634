@@ -22,7 +22,11 @@ public class ModuleActivity extends AppCompatActivity {
     VideoModel vidModel;
     ImageView pass1, pass2, pass3, pass4;
     AlertDialog.Builder feedback;
-    Intent intent;
+    Intent intent, passing1, passing2, passing3;
+    String passMod1 = "1";
+    String passMod2 = "2";
+    String passMod3 = "3";
+    String passMod4 = "4";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -79,21 +83,29 @@ public class ModuleActivity extends AppCompatActivity {
             case R.id.mod1:
                 module = String.valueOf(mod1.getText());
                 getVideoId(module);
+                passing1 = new Intent(ModuleActivity.this, QuizMainActivity.class);
+                passing1.putExtra(passMod1, 1);
                 break;
 
             case R.id.mod2:
                 module = String.valueOf(mod2.getText());
                 getVideoId(module);
+                passing2 = new Intent(ModuleActivity.this, QuizMainActivity.class);
+                passing2.putExtra(passMod2, 2);
                 break;
 
             case R.id.mod3:
                 module = String.valueOf(mod3.getText());
+                passing3 = new Intent(ModuleActivity.this, QuizMainActivity.class);
+                passing3.putExtra(passMod3, 3);
                 getVideoId(module);
 
                 break;
 
             case R.id.mod4:
                 module = String.valueOf(mod4.getText());
+                Intent pass4 = new Intent(ModuleActivity.this, QuizMainActivity.class);
+                pass4.putExtra(passMod4, 4);
                 getVideoId(module);
                 break;
         }

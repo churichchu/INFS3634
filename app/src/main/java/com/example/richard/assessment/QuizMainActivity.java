@@ -3,7 +3,7 @@ package com.example.richard.assessment;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Build;
-import android.support.annotation.RequiresApi;
+//import android.support.annotation.RequiresApi;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -30,19 +30,22 @@ public class QuizMainActivity extends AppCompatActivity {
     Button next, results;
     Button[] btns;
     TextView tv;
+    Intent i = getIntent();
+    //int batchID = i.getIntExtra(ModuleActivity);
 
     Random r;
 
-    ArrayList<QuestionsModel> qm = new ArrayList<>();
-    ArrayList<AnswersModel> am = new ArrayList<>();
-    ArrayList<Integer> takenAnswers = new ArrayList<Integer>();
+    ArrayList<QuestionsModel> qm = new ArrayList<QuestionsModel>();
+    ArrayList<AnswersModel> am = new ArrayList<AnswersModel>();
+    ArrayList<String> takenAnswers = new ArrayList<String>();
 
 
-    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
+    //@RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.quiz_activity_main);
+
 
         //random number generators
         r = new Random();
@@ -53,8 +56,12 @@ public class QuizMainActivity extends AppCompatActivity {
         qm = QandADatabase.getQuestionsArrayList();
         am = QandADatabase.getAnswersArrayList();
 
+        //arrays to store previously selected questions or answers
+        //eliminate repeats
+        String[] qmArray = new String[3];
+        String[] amArray = new String[3];
 
-
+        //MCQ answer buttons
         btns = new Button[4];
         btns[0] = (Button) findViewById(R.id.btn1);
         btns[1] = (Button) findViewById(R.id.btn2);
@@ -62,14 +69,70 @@ public class QuizMainActivity extends AppCompatActivity {
         btns[3] = (Button) findViewById(R.id.btn4);
 
 
+        mQnANum = r.nextInt(15);
+        mRandAnswer = r2.nextInt(15);
+        btnPlacementNum = r3.nextInt(4);
 
-        /*next = (Button) findViewById(R.id.nextQ);
+        questionText = qm.get(mQnANum).getmQuestion();
+        answerText = am.get(mQnANum).getmAnswers();
+        randAnswer = am.get(mRandAnswer).getmAnswers();
+
+
+        tv = findViewById(R.id.questionView);
+        tv.setText(questionText);
+
+
+        btns[btnPlacementNum].setText(answerText);
+        btnPlacementNum = r3.nextInt(4);
+        takenAnswers.add(answerText);
+
+        for (int i = 0; i < btns.length; i++) {
+            btns[btnPlacementNum].setText(randAnswer);
+            btnPlacementNum = r3.nextInt(4);
+            takenAnswers.add(randAnswer);
+            mRandAnswer = r2.nextInt(15);
+            randAnswer = am.get(mRandAnswer).getmAnswers();
+
+        }
+
+
+        next = (Button) findViewById(R.id.nextQ);
         next.setEnabled(false);
         results = (Button) findViewById(R.id.see_results);
-        results.setVisibility(View.INVISIBLE);*/
+        results.setVisibility(View.INVISIBLE);
 
-        //getQuestionsAnswers();
-        //multipleChoiceQuiz();
+        for (int k = 0; k < btns.length; k++) {
+            final int finalK = k;
+            btns[k].setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if (btns[finalK].getText().toString().equals(answerText)) {
+                        btns[finalK].setBackgroundColor(Color.GREEN);
+                        score++;
+                        next.setEnabled(true);
+                    } else {
+                        Animation shakeButton = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.shake);
+                        btns[mQnANum].startAnimation(shakeButton);
+                        btns[finalK].setBackgroundColor(Color.RED);
+                        btns[mQnANum].setBackgroundColor(Color.GREEN);
+                        next.setEnabled(true);
+                    }
+                    for (int i = 0; i < btns.length; i++) {
+                        btns[i].setEnabled(false);
+
+                    }
+                }
+            });
+        }
+
+
+    }
+}
+
+
+
+
+
 
         //selectQuestion();
         //populateAnswers();
@@ -99,29 +162,8 @@ public class QuizMainActivity extends AppCompatActivity {
             }
         });*/
 
-        /*for(int k = 0; k < btns.length; k++) {
-            final int finalK = k;
-            btns[k].setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    if(btns[finalK].getText().toString().equals(answerText)) {
-                        btns[finalK].setBackgroundColor(Color.GREEN);
-                        score++;
-                        next.setEnabled(true);
-                    } else {
-                        Animation shakeButton = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.shake);
-                        btns[mQnANum].startAnimation(shakeButton);
-                        btns[finalK].setBackgroundColor(Color.RED);
-                        btns[mQnANum].setBackgroundColor(Color.GREEN);
-                        next.setEnabled(true);
-                    }
-                    for (int i = 0; i < btns.length; i++) {
-                        btns[i].setEnabled(false);
 
-                    }
-                }
-            });*/
-        }
+
 
         /*results.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -138,7 +180,7 @@ public class QuizMainActivity extends AppCompatActivity {
             }
         });*/
 
-    }
+
 
 
 
@@ -176,7 +218,7 @@ public class QuizMainActivity extends AppCompatActivity {
                 btns[i].setText(am.get(mRandAnswer).getmAnswers());
                 takenAnswers.add(mRandAnswer);
             }
-        }*/
+        }
 
         /*for (int j = 0; j < NUM_ANSWERS; j++) {
             while (r.nextInt(3 + 1) == mQnANum) {
@@ -210,7 +252,6 @@ public class QuizMainActivity extends AppCompatActivity {
 
 
 
-    }
-}
+
 
 

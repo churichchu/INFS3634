@@ -54,7 +54,7 @@ public class QandADatabase {
         //answers for SQL basics
         add(new AnswersModel(9, "primary key (name_of_table)"));
         add(new AnswersModel(10, "drop table table_name"));
-        add(new AnswersModel(11, "by typing 'constraint pk_table_name "));
+        add(new AnswersModel(11, "by typing 'constraint pk_table_name' "));
         add(new AnswersModel(12, "By going into the object explorer and refreshing the table listing. The table should be listed after refreshing."));
 
         //answers for SQL data manipulation
