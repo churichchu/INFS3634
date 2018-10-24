@@ -19,7 +19,7 @@ public class ModuleVideo extends YouTubeBaseActivity {
 
     private YouTubePlayerView youTubeView;
     private TextView moduleName, moduleDesc;
-    private Button proc_mcq, back, invis;
+    private Button proc_mcq, back;
     private final int RECOVERY_REQUEST = 1;
 
     @Override
