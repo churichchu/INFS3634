@@ -24,12 +24,14 @@ public class QandADatabase {
         //questions for SQL basics
         add(new QuestionsModel(9, "What is the constraint syntax for setting a primary key?"));
         add(new QuestionsModel(10, "How do you remove a table from the database?"));
-        
+        add(new QuestionsModel(11, "How does the system know you are trying to set a primary key constraint?"));
+        add(new QuestionsModel(12, "After creating a table, what is one way you can test if the table exists in the database?"));
 
         //answers for SQL data manipulation
         add(new QuestionsModel(13, "What data manipulation language do you use to add an entry into a table?"));
         add(new QuestionsModel(14, "You are given a table and must retrieve a specific attribute from that table, choose the correct statement"));
-
+        add(new QuestionsModel(15, "What is the command to set a conditional query?"));
+        add(new QuestionsModel(16, "How do you delete a row entry from a table in the database?"));
 
     }};
 
@@ -52,10 +54,15 @@ public class QandADatabase {
         //answers for SQL basics
         add(new AnswersModel(9, "primary key (name_of_table)"));
         add(new AnswersModel(10, "drop table table_name"));
+        add(new AnswersModel(11, "by typing 'constraint pk_table_name "));
+        add(new AnswersModel(12, "By going into the object explorer and refreshing the table listing. The table should be listed after refreshing."));
 
         //answers for SQL data manipulation
         add(new AnswersModel(13, "insert into table_name (table_name) value ('value')"));
         add(new AnswersModel(14, "select 'attribute name' from 'table_name';"));
+        add(new AnswersModel(15, "where column_name = 'column entry'"));
+        add(new AnswersModel(16, "delete from table_name where column_name = 'column entry'"));
+
 
     }};
 
