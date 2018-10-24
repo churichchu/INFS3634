@@ -91,7 +91,15 @@ public class QuizMainActivity extends AppCompatActivity {
             btnPlacementNum = r3.nextInt(4);
             takenAnswers.add(randAnswer);
             mRandAnswer = r2.nextInt(15);
-            randAnswer = am.get(mRandAnswer).getmAnswers();
+            if(takenAnswers.contains(randAnswer) || btns[btnPlacementNum].getText().toString().equals(randAnswer)){
+                btnPlacementNum = r3.nextInt(4);
+                mRandAnswer = r2.nextInt(15);
+                randAnswer = am.get(mRandAnswer).getmAnswers();
+            }else if(btns[btnPlacementNum].getText().toString().equals(answerText)) {
+                btnPlacementNum = r3.nextInt(4);
+                btns[btnPlacementNum].setText(randAnswer);
+            }
+
 
         }
 
