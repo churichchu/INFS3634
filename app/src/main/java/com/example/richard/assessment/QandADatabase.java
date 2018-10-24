@@ -59,7 +59,7 @@ public class QandADatabase {
 
         //answers for SQL data manipulation
         add(new AnswersModel(13, "insert into table_name (table_name) value ('value')"));
-        add(new AnswersModel(14, "select 'attribute name' from 'table_name';"));
+        add(new AnswersModel(14, "select 'attribute name' from 'table_name'"));
         add(new AnswersModel(15, "where column_name = 'column entry'"));
         add(new AnswersModel(16, "delete from table_name where column_name = 'column entry'"));
 

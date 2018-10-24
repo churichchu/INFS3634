@@ -69,39 +69,53 @@ public class QuizMainActivity extends AppCompatActivity {
         btns[3] = (Button) findViewById(R.id.btn4);
 
 
-        mQnANum = r.nextInt(15);
-        mRandAnswer = r2.nextInt(15);
+        mQnANum = r.nextInt(16);
+        mRandAnswer = r2.nextInt(16);
         btnPlacementNum = r3.nextInt(4);
 
         questionText = qm.get(mQnANum).getmQuestion();
         answerText = am.get(mQnANum).getmAnswers();
         randAnswer = am.get(mRandAnswer).getmAnswers();
 
+        if(answerText .equals(randAnswer)){
+            mRandAnswer = r2.nextInt(16);
+            randAnswer = am.get(mRandAnswer).getmAnswers();
+        }
 
         tv = findViewById(R.id.questionView);
         tv.setText(questionText);
 
 
         btns[btnPlacementNum].setText(answerText);
-        btnPlacementNum = r3.nextInt(4);
         takenAnswers.add(answerText);
 
-        for (int i = 0; i < btns.length; i++) {
-            btns[btnPlacementNum].setText(randAnswer);
+
+
+        for(int i =0; i < btns.length; i++){
             btnPlacementNum = r3.nextInt(4);
+            btns[btnPlacementNum].setText(randAnswer);
             takenAnswers.add(randAnswer);
-            mRandAnswer = r2.nextInt(15);
-            if(takenAnswers.contains(randAnswer) || btns[btnPlacementNum].getText().toString().equals(randAnswer)){
-                btnPlacementNum = r3.nextInt(4);
-                mRandAnswer = r2.nextInt(15);
-                randAnswer = am.get(mRandAnswer).getmAnswers();
-            }else if(btns[btnPlacementNum].getText().toString().equals(answerText)) {
+            if(btns[i].getText().toString().length() == 0){
                 btnPlacementNum = r3.nextInt(4);
                 btns[btnPlacementNum].setText(randAnswer);
+                takenAnswers.add(randAnswer);
+            }else{
+                continue;
+            }
+        }
+
+        /*for(int i = 0; i < btns.length; i++){
+            if(!btns[i].getText().toString().equals(answerText)){
+                mRandAnswer = r2.nextInt(16);
+                if(!takenAnswers.contains(mRandAnswer)){
+                    takenAnswers.add(randAnswer);
+                    btns[i].setText(am.get(mRandAnswer).getmAnswers());
+                }else{
+                    mRandAnswer = r2.nextInt(16);
+                }
             }
 
-
-        }
+        }*/
 
 
         next = (Button) findViewById(R.id.nextQ);
