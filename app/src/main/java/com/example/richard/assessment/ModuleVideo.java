@@ -33,18 +33,23 @@ public class ModuleVideo extends YouTubeBaseActivity {
         moduleDesc = (TextView) findViewById(R.id.mod_desc);
         moduleDesc.setText(getIntent().getStringExtra("mod_desc"));
         proc_mcq = (Button) findViewById(R.id.proc_mcq);
-        proc_mcq.setEnabled(false);
+        proc_mcq.setActivated(false);
         back = (Button) findViewById(R.id.back);
 
 
         proc_mcq.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent i = new Intent(ModuleVideo.this, QuizMainActivity.class);
-                startActivity(i);
+                if (!proc_mcq.isActivated()) {
+                    Animation shake = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.shake);
+                    proc_mcq.startAnimation(shake);
+                    Toast.makeText(getApplicationContext(), R.string.vid_incomplete, Toast.LENGTH_LONG).show();
+                } else {
+                    Intent i = new Intent(ModuleVideo.this, QuizMainActivity.class);
+                    startActivity(i);
+                }
             }
         });
-
 
         back.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -126,7 +131,7 @@ public class ModuleVideo extends YouTubeBaseActivity {
 
         @Override
         public void onVideoEnded() {
-            proc_mcq.setEnabled(true);
+            proc_mcq.setActivated(true);
         }
 
         @Override
