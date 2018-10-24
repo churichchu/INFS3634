@@ -37,7 +37,7 @@ public class QuizMainActivity extends AppCompatActivity {
 
     ArrayList<QuestionsModel> qm = new ArrayList<QuestionsModel>();
     ArrayList<AnswersModel> am = new ArrayList<AnswersModel>();
-    ArrayList<String> takenAnswers = new ArrayList<String>();
+    ArrayList<Integer> takenAnswers = new ArrayList<>();
 
 
     //@RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
@@ -49,8 +49,8 @@ public class QuizMainActivity extends AppCompatActivity {
 
         //random number generators
         r = new Random();
-        Random r2 = new Random();
-        Random r3 = new Random();
+        final Random r2 = new Random();
+        final Random r3 = new Random();
 
         //Question and answer array lists
         qm = QandADatabase.getQuestionsArrayList();
@@ -73,36 +73,36 @@ public class QuizMainActivity extends AppCompatActivity {
         mRandAnswer = r2.nextInt(15);
         btnPlacementNum = r3.nextInt(4);
 
+
         questionText = qm.get(mQnANum).getmQuestion();
         answerText = am.get(mQnANum).getmAnswers();
         randAnswer = am.get(mRandAnswer).getmAnswers();
+
+        btns[btnPlacementNum].setText(answerText);
 
 
         tv = findViewById(R.id.questionView);
         tv.setText(questionText);
 
 
-        btns[btnPlacementNum].setText(answerText);
+
         btnPlacementNum = r3.nextInt(4);
-        takenAnswers.add(answerText);
+        ArrayList btnPlacementNumList = new ArrayList<>();
+        btnPlacementNumList.add(btnPlacementNum);
+
 
         for (int i = 0; i < btns.length; i++) {
-            btns[btnPlacementNum].setText(randAnswer);
-            btnPlacementNum = r3.nextInt(4);
-            takenAnswers.add(randAnswer);
-            mRandAnswer = r2.nextInt(15);
-            if(takenAnswers.contains(randAnswer) || btns[btnPlacementNum].getText().toString().equals(randAnswer)){
-                btnPlacementNum = r3.nextInt(4);
-                mRandAnswer = r2.nextInt(15);
-                randAnswer = am.get(mRandAnswer).getmAnswers();
-            }else if(btns[btnPlacementNum].getText().toString().equals(answerText)) {
-                btnPlacementNum = r3.nextInt(4);
-                btns[btnPlacementNum].setText(randAnswer);
+            if (!btns[i].getText().equals(answerText)) {
+                mRandAnswer = r2.nextInt(16);
+                if (!takenAnswers.contains(mRandAnswer)) {
+                    takenAnswers.add(mRandAnswer);
+                    btns[i].setText(am.get(mRandAnswer).getmAnswers());
+                } else {
+                    mRandAnswer = r2.nextInt(16);
+                    i--;
+                }
             }
-
-
         }
-
 
         next = (Button) findViewById(R.id.nextQ);
         next.setEnabled(false);
@@ -120,45 +120,27 @@ public class QuizMainActivity extends AppCompatActivity {
                         next.setEnabled(true);
                     } else {
                         Animation shakeButton = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.shake);
-                        btns[mQnANum].startAnimation(shakeButton);
+                        btns[finalK].startAnimation(shakeButton);
                         btns[finalK].setBackgroundColor(Color.RED);
                         btns[mQnANum].setBackgroundColor(Color.GREEN);
                         next.setEnabled(true);
                     }
                     for (int i = 0; i < btns.length; i++) {
                         btns[i].setEnabled(false);
-
                     }
                 }
             });
         }
 
-
-    }
-}
-
-
-
-
-
-
-        //selectQuestion();
-        //populateAnswers();
-        //getSelectedAnswer();
-        //checkSelectedAnswer();
-
-
-        //comment out start HERE*******************
-        /* next.setOnClickListener(new View.OnClickListener() {
+        next.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 takenAnswers.clear();
-                mQnANum = 0;
-                multipleChoiceQuiz();
-                for(int i = 0; i < NUM_ANSWERS; i++) {
+                for (int i = 0; i < NUM_ANSWERS; i++) {
                     btns[i].setEnabled(true);
                     btns[i].setBackgroundResource(android.R.drawable.btn_default);
                 }
+
 
                 clickCount++;
                 if (clickCount == NUM_QUESTIONS - 1) {
@@ -168,12 +150,22 @@ public class QuizMainActivity extends AppCompatActivity {
                     results.setVisibility(View.VISIBLE);
                 }
             }
-        });*/
+        });
+    }
+}
 
 
 
 
-        /*results.setOnClickListener(new View.OnClickListener() {
+
+
+
+        //comment out start HERE*******************
+
+
+
+/*
+        results.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(QuizMainActivity.this, ModuleActivity.class);
@@ -186,7 +178,7 @@ public class QuizMainActivity extends AppCompatActivity {
                 }
                 startActivity(intent);
             }
-        });*/
+        });
 
 
 
