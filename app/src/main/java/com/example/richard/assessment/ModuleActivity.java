@@ -58,6 +58,7 @@ public class ModuleActivity extends AppCompatActivity {
         if(intent != null) {
             setButtonText();
             if(intent.hasExtra("pass")) {
+                getFeedback();
                 pass1.setVisibility(View.VISIBLE);
                 pass2.setVisibility(View.VISIBLE);
                 pass3.setVisibility(View.VISIBLE);

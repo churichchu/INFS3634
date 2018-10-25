@@ -29,12 +29,11 @@ public class QuizMainActivity extends AppCompatActivity {
     Button[] btns;
     TextView tv;
     int clickCount = 0;
-    int score = 0;
+    int score;
     ModuleModel moduleModel;
+    View v;
 
     Random r, r2, r3;
-    boolean correctAnswer;
-
 
     ArrayList<QuestionsModel> qm = new ArrayList<>();
     ArrayList<AnswersModel> am = new ArrayList<>();
@@ -75,18 +74,14 @@ public class QuizMainActivity extends AppCompatActivity {
         results = (Button) findViewById(R.id.see_results);
 
         getQuestionsAnswers();
-        if(multipleChoiceQuiz()) {
-            score = score + 1;
-        }
+        multipleChoiceQuiz();
 
 
         next.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 takenAnswers.clear();
-                if(multipleChoiceQuiz()) {
-                    score = score + 1;
-                }
+                multipleChoiceQuiz();
 
                 for (int i = 0; i < NUM_ANSWERS; i++) {
                     btns[i].setEnabled(true);
@@ -160,8 +155,7 @@ public class QuizMainActivity extends AppCompatActivity {
         }*/
     }
 
-    public boolean multipleChoiceQuiz() {
-        correctAnswer = false;
+    public void multipleChoiceQuiz() {
         mQnANum = r.nextInt(16);
         while (takenAnswers.contains(mQnANum)) {
             mQnANum = r.nextInt(16);
@@ -196,29 +190,69 @@ public class QuizMainActivity extends AppCompatActivity {
             }
         }
 
-        for (int k = 0; k < btns.length; k++) {
-            final int finalK = k;
-            btns[k].setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    if (btns[finalK].getText().toString().equals(answerText)) {
-                        btns[finalK].setBackgroundColor(Color.GREEN);
-                        correctAnswer = true;
-                    } else {
-                        Animation shakeButton = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.shake);
-                        btns[finalK].startAnimation(shakeButton);
-                        btns[finalK].setBackgroundColor(Color.RED);
-                        btns[btnPlacementNum].setBackgroundColor(Color.GREEN);
-                        correctAnswer = false;
-                    }
-                    for (int i = 0; i < btns.length; i++) {
-                        btns[i].setEnabled(false);
+    }
 
-                    }
+    public void onAnswerClicked(View v) {
+        switch(v.getId()) {
+            case R.id.btn1:
+                if(btns[0].getText().toString().equals(answerText)) {
+                    btns[0].setBackgroundColor(Color.GREEN);
+                    score++;
+                } else {
+                    Animation shakeButton = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.shake);
+                    btns[0].startAnimation(shakeButton);
+                    btns[0].setBackgroundColor(Color.RED);
+                    btns[btnPlacementNum].setBackgroundColor(Color.GREEN);
                 }
-            });
+                for (int i = 0; i < btns.length; i++) {
+                    btns[i].setEnabled(false);
+                }
+                break;
 
+            case R.id.btn2:
+                if(btns[1].getText().toString().equals(answerText)) {
+                    btns[1].setBackgroundColor(Color.GREEN);
+                    score++;
+                } else {
+                    Animation shakeButton = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.shake);
+                    btns[1].startAnimation(shakeButton);
+                    btns[1].setBackgroundColor(Color.RED);
+                    btns[btnPlacementNum].setBackgroundColor(Color.GREEN);
+                }
+                for (int i = 0; i < btns.length; i++) {
+                    btns[i].setEnabled(false);
+                }
+                break;
+
+            case R.id.btn3:
+                if(btns[2].getText().toString().equals(answerText)) {
+                    btns[2].setBackgroundColor(Color.GREEN);
+                    score++;
+                } else {
+                    Animation shakeButton = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.shake);
+                    btns[2].startAnimation(shakeButton);
+                    btns[2].setBackgroundColor(Color.RED);
+                    btns[btnPlacementNum].setBackgroundColor(Color.GREEN);
+                }
+                for (int i = 0; i < btns.length; i++) {
+                    btns[i].setEnabled(false);
+                }
+                break;
+
+            case R.id.btn4:
+                if(btns[3].getText().toString().equals(answerText)) {
+                    btns[3].setBackgroundColor(Color.GREEN);
+                    score++;
+                } else {
+                    Animation shakeButton = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.shake);
+                    btns[3].startAnimation(shakeButton);
+                    btns[3].setBackgroundColor(Color.RED);
+                    btns[btnPlacementNum].setBackgroundColor(Color.GREEN);
+                }
+                for (int i = 0; i < btns.length; i++) {
+                    btns[i].setEnabled(false);
+                }
+                break;
         }
-        return correctAnswer;
     }
 }
