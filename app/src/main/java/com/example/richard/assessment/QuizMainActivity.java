@@ -37,7 +37,7 @@ public class QuizMainActivity extends AppCompatActivity {
 
     ArrayList<QuestionsModel> qm = new ArrayList<QuestionsModel>();
     ArrayList<AnswersModel> am = new ArrayList<AnswersModel>();
-    ArrayList<Integer> takenAnswers = new ArrayList<>();
+    ArrayList<String> takenAnswers = new ArrayList<String>();
 
 
     //@RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
@@ -49,8 +49,8 @@ public class QuizMainActivity extends AppCompatActivity {
 
         //random number generators
         r = new Random();
-        final Random r2 = new Random();
-        final Random r3 = new Random();
+        Random r2 = new Random();
+        Random r3 = new Random();
 
         //Question and answer array lists
         qm = QandADatabase.getQuestionsArrayList();
@@ -69,40 +69,54 @@ public class QuizMainActivity extends AppCompatActivity {
         btns[3] = (Button) findViewById(R.id.btn4);
 
 
-        mQnANum = r.nextInt(15);
-        mRandAnswer = r2.nextInt(15);
+        mQnANum = r.nextInt(16);
+        mRandAnswer = r2.nextInt(16);
         btnPlacementNum = r3.nextInt(4);
-
 
         questionText = qm.get(mQnANum).getmQuestion();
         answerText = am.get(mQnANum).getmAnswers();
         randAnswer = am.get(mRandAnswer).getmAnswers();
 
-        btns[btnPlacementNum].setText(answerText);
-
+        if(answerText .equals(randAnswer)){
+            mRandAnswer = r2.nextInt(16);
+            randAnswer = am.get(mRandAnswer).getmAnswers();
+        }
 
         tv = findViewById(R.id.questionView);
         tv.setText(questionText);
 
 
-
-        btnPlacementNum = r3.nextInt(4);
-        ArrayList btnPlacementNumList = new ArrayList<>();
-        btnPlacementNumList.add(btnPlacementNum);
+        btns[btnPlacementNum].setText(answerText);
+        takenAnswers.add(answerText);
 
 
-        for (int i = 0; i < btns.length; i++) {
-            if (!btns[i].getText().equals(answerText)) {
-                mRandAnswer = r2.nextInt(16);
-                if (!takenAnswers.contains(mRandAnswer)) {
-                    takenAnswers.add(mRandAnswer);
-                    btns[i].setText(am.get(mRandAnswer).getmAnswers());
-                } else {
-                    mRandAnswer = r2.nextInt(16);
-                    i--;
-                }
+
+        for(int i =0; i < btns.length; i++){
+            btnPlacementNum = r3.nextInt(4);
+            btns[btnPlacementNum].setText(randAnswer);
+            takenAnswers.add(randAnswer);
+            if(btns[i].getText().toString().length() == 0){
+                btnPlacementNum = r3.nextInt(4);
+                btns[btnPlacementNum].setText(randAnswer);
+                takenAnswers.add(randAnswer);
+            }else{
+                continue;
             }
         }
+
+        /*for(int i = 0; i < btns.length; i++){
+            if(!btns[i].getText().toString().equals(answerText)){
+                mRandAnswer = r2.nextInt(16);
+                if(!takenAnswers.contains(mRandAnswer)){
+                    takenAnswers.add(randAnswer);
+                    btns[i].setText(am.get(mRandAnswer).getmAnswers());
+                }else{
+                    mRandAnswer = r2.nextInt(16);
+                }
+            }
+
+        }*/
+
 
         next = (Button) findViewById(R.id.nextQ);
         next.setEnabled(false);
@@ -120,27 +134,45 @@ public class QuizMainActivity extends AppCompatActivity {
                         next.setEnabled(true);
                     } else {
                         Animation shakeButton = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.shake);
-                        btns[finalK].startAnimation(shakeButton);
+                        btns[mQnANum].startAnimation(shakeButton);
                         btns[finalK].setBackgroundColor(Color.RED);
                         btns[mQnANum].setBackgroundColor(Color.GREEN);
                         next.setEnabled(true);
                     }
                     for (int i = 0; i < btns.length; i++) {
                         btns[i].setEnabled(false);
+
                     }
                 }
             });
         }
 
-        next.setOnClickListener(new View.OnClickListener() {
+
+    }
+}
+
+
+
+
+
+
+        //selectQuestion();
+        //populateAnswers();
+        //getSelectedAnswer();
+        //checkSelectedAnswer();
+
+
+        //comment out start HERE*******************
+        /* next.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 takenAnswers.clear();
-                for (int i = 0; i < NUM_ANSWERS; i++) {
+                mQnANum = 0;
+                multipleChoiceQuiz();
+                for(int i = 0; i < NUM_ANSWERS; i++) {
                     btns[i].setEnabled(true);
                     btns[i].setBackgroundResource(android.R.drawable.btn_default);
                 }
-
 
                 clickCount++;
                 if (clickCount == NUM_QUESTIONS - 1) {
@@ -150,22 +182,12 @@ public class QuizMainActivity extends AppCompatActivity {
                     results.setVisibility(View.VISIBLE);
                 }
             }
-        });
-    }
-}
+        });*/
 
 
 
 
-
-
-
-        //comment out start HERE*******************
-
-
-
-/*
-        results.setOnClickListener(new View.OnClickListener() {
+        /*results.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(QuizMainActivity.this, ModuleActivity.class);
@@ -178,7 +200,7 @@ public class QuizMainActivity extends AppCompatActivity {
                 }
                 startActivity(intent);
             }
-        });
+        });*/
 
 
 
