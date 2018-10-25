@@ -103,7 +103,7 @@
 
     <Button
         android:id="@+id/see_results"
-        android:layout_width="wrap_content"
+        android:layout_width="190dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
         android:layout_marginLeft="8dp"
@@ -113,6 +113,7 @@
         android:background="@android:color/holo_orange_light"
         android:text="@string/see_results"
         android:textColor="@android:color/white"
+        android:visibility="invisible"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />

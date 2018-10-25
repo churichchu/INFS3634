@@ -120,6 +120,7 @@ public class ModuleActivity extends AppCompatActivity {
                 intent.putExtra("video_id", vidModel.getVideoId().get(i));
                 intent.putExtra("video_title", vidModel.getVideoTitle().get(i));
                 intent.putExtra("mod_desc", vidModel.getModuleDescription().get(i));
+                intent.putExtra("module_name", vidModel.getVideoModule().get(i));
                 startActivity(intent);
             }
         }
