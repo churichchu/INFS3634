@@ -1,5 +1,6 @@
 package com.example.richard.assessment;
 
+import android.content.Intent;
 import android.content.res.Resources;
 import android.graphics.Color;
 import android.os.Build;
@@ -21,6 +22,7 @@ public class QuizMainActivity extends AppCompatActivity {
 
     final int NUM_ANSWERS = 4;
     final int NUM_QUESTIONS = 4;
+    final double PASS_MARK = 0.5;
     int mQnANum, btnPlacementNum, mRandAnswer;
     String questionText, answerText, randAnswer;
     Button next, results;
@@ -99,6 +101,20 @@ public class QuizMainActivity extends AppCompatActivity {
                 }
 
                 System.out.println("Score = " +score);
+            }
+        });
+
+        results.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i = new Intent(QuizMainActivity.this, ModuleActivity.class);
+                double mark = score / NUM_QUESTIONS;
+                if(mark >= PASS_MARK) {
+                    i.putExtra("pass", "pass");
+                } else {
+                    i.putExtra("fail", "fail");
+                }
+                startActivity(i);
             }
         });
 

@@ -42,6 +42,7 @@ public class ModuleActivity extends AppCompatActivity {
         mod3 = (Button) findViewById(R.id.mod3);
         mod4 = (Button) findViewById(R.id.mod4);
 
+        //TO DO: IF INTENT.GETEXTRA("MODULE")EQUALS MODULE 1, SHOW ONLY PASS 1.
         pass1 = (ImageView) findViewById(R.id.pass1);
         pass2 = (ImageView) findViewById(R.id.pass2);
         pass3 = (ImageView) findViewById(R.id.pass3);
