@@ -35,30 +35,7 @@ public class QuizMainActivity extends AppCompatActivity {
     TextView tv;
     Random r;
 
-    public BroadcastReceiver mReceiver = new BroadcastReceiver() {
-        @Override
-        public void onReceive(Context context, Intent intent) {
-            int receivedModule = intent.getIntExtra(ModuleActivity.passedMod,0);
-            System.out.println(receivedModule);
-            switch (receivedModule) {
-                case 1:
-                    mQnANum = r.nextInt(3);
-                    break;
 
-                case 2:
-                    mQnANum = r.nextInt(7-3);
-                    break;
-
-                case 3:
-                    mQnANum = r.nextInt(11-7);
-                    break;
-
-                case 4:
-                    mQnANum = r.nextInt(16-11);
-                    break;
-            }
-        }
-    };
 
 
     ArrayList<QuestionsModel> qm = new ArrayList<QuestionsModel>();
@@ -72,8 +49,33 @@ public class QuizMainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.quiz_activity_main);
 
+         BroadcastReceiver mReceiver = new BroadcastReceiver() {
+            @Override
+            public void onReceive(Context context, Intent intent) {
+                int receivedModule = intent.getIntExtra(ModuleActivity.passedMod,0);
+                System.out.println(receivedModule);
+                switch (receivedModule) {
+                    case 1:
+                        mQnANum = r.nextInt(3);
+                        break;
+
+                    case 2:
+                        mQnANum = r.nextInt(7-3);
+                        break;
+
+                    case 3:
+                        mQnANum = r.nextInt(11-7);
+                        break;
+
+                    case 4:
+                        mQnANum = r.nextInt(16-11);
+                        break;
+                }
+            }
+        };
+
         //Receiving the broadcast from ModuleActivity
-        LocalBroadcastManager.getInstance(this).registerReceiver(mReceiver, new IntentFilter("ModuleOne"));
+        LocalBroadcastManager.getInstance(this).registerReceiver(mReceiver, new IntentFilter());
 
         //random number generators
         r = new Random();
@@ -108,6 +110,7 @@ public class QuizMainActivity extends AppCompatActivity {
         btnPlacementNum = r3.nextInt(4);
 
         //retrieving question, answer, and random answer text
+        System.out.println(mQnANum);
         questionText = qm.get(mQnANum).getmQuestion();
         answerText = am.get(mQnANum).getmAnswers();
         randAnswer = am.get(mRandAnswer).getmAnswers();

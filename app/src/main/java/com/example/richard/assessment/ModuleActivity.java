@@ -83,29 +83,28 @@ public class ModuleActivity extends AppCompatActivity {
             case R.id.mod1:
                 module = String.valueOf(mod1.getText());
                 getVideoId(module);
-                passingMod = new Intent("ModuleOne").putExtra(passedMod, 1);
+                passingMod = new Intent().putExtra(passedMod, 1);
                 LocalBroadcastManager.getInstance(ModuleActivity.this).sendBroadcast(intent);
-                System.out.println(passingMod.getExtras().toString());
                 break;
 
             case R.id.mod2:
                 module = String.valueOf(mod2.getText());
                 getVideoId(module);
-                passingMod = new Intent("ModuleTwo").putExtra(passedMod, 2);
+                passingMod = new Intent().putExtra(passedMod, 2);
                 LocalBroadcastManager.getInstance(ModuleActivity.this).sendBroadcast(intent);
                 break;
 
             case R.id.mod3:
                 module = String.valueOf(mod3.getText());
                 getVideoId(module);
-                passingMod = new Intent("ModuleThree").putExtra(passedMod, 3);
+                passingMod = new Intent().putExtra(passedMod, 3);
                 LocalBroadcastManager.getInstance(ModuleActivity.this).sendBroadcast(intent);
                 break;
 
             case R.id.mod4:
                 module = String.valueOf(mod4.getText());
                 getVideoId(module);
-                passingMod = new Intent("ModuleFour").putExtra(passedMod, 4);
+                passingMod = new Intent().putExtra(passedMod, 4);
                 LocalBroadcastManager.getInstance(ModuleActivity.this).sendBroadcast(intent);
                 break;
         }
