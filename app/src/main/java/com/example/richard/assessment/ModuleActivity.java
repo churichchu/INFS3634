@@ -42,6 +42,7 @@ public class ModuleActivity extends AppCompatActivity {
         mod3 = (Button) findViewById(R.id.mod3);
         mod4 = (Button) findViewById(R.id.mod4);
 
+        //TO DO: IF INTENT.GETEXTRA("MODULE")EQUALS MODULE 1, SHOW ONLY PASS 1.
         pass1 = (ImageView) findViewById(R.id.pass1);
         pass2 = (ImageView) findViewById(R.id.pass2);
         pass3 = (ImageView) findViewById(R.id.pass3);
@@ -57,6 +58,7 @@ public class ModuleActivity extends AppCompatActivity {
         if(intent != null) {
             setButtonText();
             if(intent.hasExtra("pass")) {
+                getFeedback();
                 pass1.setVisibility(View.VISIBLE);
                 pass2.setVisibility(View.VISIBLE);
                 pass3.setVisibility(View.VISIBLE);
@@ -120,6 +122,7 @@ public class ModuleActivity extends AppCompatActivity {
                 intent.putExtra("video_id", vidModel.getVideoId().get(i));
                 intent.putExtra("video_title", vidModel.getVideoTitle().get(i));
                 intent.putExtra("mod_desc", vidModel.getModuleDescription().get(i));
+                intent.putExtra("module_name", vidModel.getVideoModule().get(i));
                 startActivity(intent);
             }
         }

@@ -46,6 +46,7 @@ public class ModuleVideo extends YouTubeBaseActivity {
                     Toast.makeText(getApplicationContext(), R.string.vid_incomplete, Toast.LENGTH_LONG).show();
                 } else {
                     Intent i = new Intent(ModuleVideo.this, QuizMainActivity.class);
+                    i.putExtra("module_name", getIntent().getStringExtra("module_name"));
                     startActivity(i);
                 }
             }
