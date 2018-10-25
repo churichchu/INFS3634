@@ -3,6 +3,7 @@ package com.example.richard.assessment;
 import android.app.AlertDialog;
 import android.content.Intent;
 import android.content.res.Resources;
+import android.support.v4.content.LocalBroadcastManager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -22,11 +23,8 @@ public class ModuleActivity extends AppCompatActivity {
     VideoModel vidModel;
     ImageView pass1, pass2, pass3, pass4;
     AlertDialog.Builder feedback;
-    Intent intent, passing1, passing2, passing3;
-    String passMod1 = "1";
-    String passMod2 = "2";
-    String passMod3 = "3";
-    String passMod4 = "4";
+    Intent intent, passingMod;
+    public static final String passedMod = "1";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -85,30 +83,30 @@ public class ModuleActivity extends AppCompatActivity {
             case R.id.mod1:
                 module = String.valueOf(mod1.getText());
                 getVideoId(module);
-                passing1 = new Intent(ModuleActivity.this, QuizMainActivity.class);
-                passing1.putExtra(passMod1, 1);
+                passingMod = new Intent("ModuleOne").putExtra(passedMod, 1);
+                LocalBroadcastManager.getInstance(ModuleActivity.this).sendBroadcast(intent);
+                System.out.println(passingMod.getExtras().toString());
                 break;
 
             case R.id.mod2:
                 module = String.valueOf(mod2.getText());
                 getVideoId(module);
-                passing2 = new Intent(ModuleActivity.this, QuizMainActivity.class);
-                passing2.putExtra(passMod2, 2);
+                passingMod = new Intent("ModuleTwo").putExtra(passedMod, 2);
+                LocalBroadcastManager.getInstance(ModuleActivity.this).sendBroadcast(intent);
                 break;
 
             case R.id.mod3:
                 module = String.valueOf(mod3.getText());
-                passing3 = new Intent(ModuleActivity.this, QuizMainActivity.class);
-                passing3.putExtra(passMod3, 3);
                 getVideoId(module);
-
+                passingMod = new Intent("ModuleThree").putExtra(passedMod, 3);
+                LocalBroadcastManager.getInstance(ModuleActivity.this).sendBroadcast(intent);
                 break;
 
             case R.id.mod4:
                 module = String.valueOf(mod4.getText());
-                Intent pass4 = new Intent(ModuleActivity.this, QuizMainActivity.class);
-                pass4.putExtra(passMod4, 4);
                 getVideoId(module);
+                passingMod = new Intent("ModuleFour").putExtra(passedMod, 4);
+                LocalBroadcastManager.getInstance(ModuleActivity.this).sendBroadcast(intent);
                 break;
         }
     }

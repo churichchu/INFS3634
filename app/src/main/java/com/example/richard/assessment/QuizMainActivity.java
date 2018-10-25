@@ -1,9 +1,12 @@
 package com.example.richard.assessment;
 
+import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.graphics.Color;
-import android.os.Build;
 //import android.support.annotation.RequiresApi;
+import android.support.v4.content.LocalBroadcastManager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -15,7 +18,6 @@ import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.Random;
-import java.util.concurrent.ThreadLocalRandom;
 
 public class QuizMainActivity extends AppCompatActivity {
 
@@ -31,10 +33,33 @@ public class QuizMainActivity extends AppCompatActivity {
     Button next, results;
     Button[] btns;
     TextView tv;
-    Intent i = getIntent();
-    //int batchID = i.getIntExtra(ModuleActivity);
-
     Random r;
+
+    public BroadcastReceiver mReceiver = new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            int receivedModule = intent.getIntExtra(ModuleActivity.passedMod,0);
+            System.out.println(receivedModule);
+            switch (receivedModule) {
+                case 1:
+                    mQnANum = r.nextInt(3);
+                    break;
+
+                case 2:
+                    mQnANum = r.nextInt(7-3);
+                    break;
+
+                case 3:
+                    mQnANum = r.nextInt(11-7);
+                    break;
+
+                case 4:
+                    mQnANum = r.nextInt(16-11);
+                    break;
+            }
+        }
+    };
+
 
     ArrayList<QuestionsModel> qm = new ArrayList<QuestionsModel>();
     ArrayList<AnswersModel> am = new ArrayList<AnswersModel>();
@@ -47,6 +72,8 @@ public class QuizMainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.quiz_activity_main);
 
+        //Receiving the broadcast from ModuleActivity
+        LocalBroadcastManager.getInstance(this).registerReceiver(mReceiver, new IntentFilter("ModuleOne"));
 
         //random number generators
         r = new Random();
@@ -69,18 +96,28 @@ public class QuizMainActivity extends AppCompatActivity {
         btns[2] = (Button) findViewById(R.id.btn3);
         btns[3] = (Button) findViewById(R.id.btn4);
 
+        //Randomly generated values to keep track of:
+        //Question and Answer
+        //The random answers
+        //Randomly selected button
+        //***IMPORTANT*** this section here determines the batch of questions related to the selected module!!
+        //However only mQnANum and mRandAnswer is
 
-        mQnANum = r.nextInt(16);
+
         mRandAnswer = r2.nextInt(16);
         btnPlacementNum = r3.nextInt(4);
 
+        //retrieving question, answer, and random answer text
         questionText = qm.get(mQnANum).getmQuestion();
         answerText = am.get(mQnANum).getmAnswers();
         randAnswer = am.get(mRandAnswer).getmAnswers();
 
+        //IF so that Question and Answer values don't conflict with
+        //random answer value
         if(mQnANum == mRandAnswer){
             mRandAnswer = r2.nextInt(16);
         }
+
 
         tv = findViewById(R.id.questionView);
         tv.setText(questionText);
@@ -175,7 +212,9 @@ public class QuizMainActivity extends AppCompatActivity {
                 }
             }
         });
-    };
+    }
+
+
 }
 
 
