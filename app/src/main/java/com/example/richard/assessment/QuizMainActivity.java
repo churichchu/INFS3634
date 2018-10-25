@@ -1,10 +1,9 @@
 package com.example.richard.assessment;
 
 import android.content.Intent;
-import android.content.res.Resources;
 import android.graphics.Color;
 import android.os.Build;
-import android.support.annotation.RequiresApi;
+//import android.support.annotation.RequiresApi;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -22,143 +21,226 @@ public class QuizMainActivity extends AppCompatActivity {
 
     final int NUM_ANSWERS = 4;
     final int NUM_QUESTIONS = 4;
-    final double PASS_MARK = 0.5;
+    final double passMark = 0.8;
     int mQnANum, btnPlacementNum, mRandAnswer;
+    int clickCount = 0;
+    int score = 0;
+    int questionLimit = 0;
+
     String questionText, answerText, randAnswer;
     Button next, results;
     Button[] btns;
     TextView tv;
-    int clickCount = 0;
-    int score;
-    ModuleModel moduleModel;
-    View v;
+    Intent i = getIntent();
+    //int batchID = i.getIntExtra(ModuleActivity);
 
-    Random r, r2, r3;
+    Random r;
 
-    ArrayList<QuestionsModel> qm = new ArrayList<>();
-    ArrayList<AnswersModel> am = new ArrayList<>();
-    ArrayList<Integer> takenAnswers = new ArrayList<Integer>();
-    ArrayList<String> takenQuestions = new ArrayList<String>();
+    ArrayList<QuestionsModel> qm = new ArrayList<QuestionsModel>();
+    ArrayList<AnswersModel> am = new ArrayList<AnswersModel>();
+    ArrayList<String> takenAnswers = new ArrayList<String>();
 
 
-    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
+    //@RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.quiz_activity_main);
 
-        //retrieved questions array list
 
+        //random number generators
         r = new Random();
-        r2 = new Random();
-        r3 = new Random();
+        Random r2 = new Random();
+        Random r3 = new Random();
 
+        //Question and answer array lists
+        qm = QandADatabase.getQuestionsArrayList();
+        am = QandADatabase.getAnswersArrayList();
 
-        //retrieved answers array list
+        //arrays to store previously selected questions or answers
+        //eliminate repeats
+        String[] qmArray = new String[3];
+        String[] amArray = new String[3];
 
-
-        //Random Number generator for Questions and Answers
-        //r2 is meant for generating random incorrect answers when making mcq
-
-
-        tv = findViewById(R.id.questionView);
-
-
+        //MCQ answer buttons
         btns = new Button[4];
         btns[0] = (Button) findViewById(R.id.btn1);
         btns[1] = (Button) findViewById(R.id.btn2);
         btns[2] = (Button) findViewById(R.id.btn3);
         btns[3] = (Button) findViewById(R.id.btn4);
 
-        next = (Button) findViewById(R.id.nextQ);
-        results = (Button) findViewById(R.id.see_results);
 
-        getQuestionsAnswers();
-        multipleChoiceQuiz();
+        mQnANum = r.nextInt(16);
+        mRandAnswer = r2.nextInt(16);
+        btnPlacementNum = r3.nextInt(4);
+
+        questionText = qm.get(mQnANum).getmQuestion();
+        answerText = am.get(mQnANum).getmAnswers();
+        randAnswer = am.get(mRandAnswer).getmAnswers();
+
+        if(mQnANum == mRandAnswer){
+            mRandAnswer = r2.nextInt(16);
+        }
+
+        tv = findViewById(R.id.questionView);
+        tv.setText(questionText);
+
+
+        btns[btnPlacementNum].setText(answerText);
+        takenAnswers.add(answerText);
+
+
+        for(int i =0; i < btns.length; i++){
+
+            if(btns[i].getText().toString().length() == 0){
+                btns[i].setText(randAnswer);
+                takenAnswers.add(randAnswer);
+                mRandAnswer = r2.nextInt(16);
+                randAnswer = am.get(mRandAnswer).getmAnswers();
+            }else if(btns[i].getText().toString().contains(answerText)){
+                mRandAnswer = r2.nextInt(16);
+                randAnswer = am.get(mRandAnswer).getmAnswers();
+                takenAnswers.add(randAnswer);
+                btnPlacementNum = r3.nextInt(4);
+                btns[btnPlacementNum].setText(randAnswer);
+            }
+        }
+
+        /*for(int i = 0; i < btns.length; i++){
+            if(!btns[i].getText().toString().equals(answerText)){
+                mRandAnswer = r2.nextInt(16);
+                if(!takenAnswers.contains(mRandAnswer)){
+                    takenAnswers.add(randAnswer);
+                    btns[i].setText(am.get(mRandAnswer).getmAnswers());
+                }else{
+                    mRandAnswer = r2.nextInt(16);
+                }
+            }
+
+        }*/
+
+
+        next = (Button) findViewById(R.id.nextQ);
+        next.setEnabled(false);
+
+        results = (Button) findViewById(R.id.see_results);
+        results.setVisibility(View.INVISIBLE);
+
+        for (int k = 0; k < btns.length; k++) {
+            final int finalK = k;
+            btns[k].setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if (btns[finalK].getText().toString().equals(answerText)) {
+                        btns[finalK].setBackgroundColor(Color.GREEN);
+                        Toast.makeText(getApplicationContext(), "Correct", Toast.LENGTH_LONG).show();
+                        score++;
+                        questionLimit++;
+                        next.setEnabled(true);
+                    } else {
+                        Animation shakeButton = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.shake);
+                        btns[mQnANum].startAnimation(shakeButton);
+                        btns[finalK].setBackgroundColor(Color.RED);
+                        btns[mQnANum].setBackgroundColor(Color.GREEN);
+                        questionLimit++;
+                        next.setEnabled(true);
+                    }
+                    for (int i = 0; i < btns.length; i++) {
+                        btns[i].setEnabled(false);
+                    }
+                }
+            });
+        }
+
+
 
 
         next.setOnClickListener(new View.OnClickListener() {
             @Override
+            public void onClick(View view) {
+                System.out.println(questionLimit);
+                System.out.println(score);
+                if(questionLimit == 4 && score >=2){
+                    Toast.makeText(getApplicationContext(), "passed", Toast.LENGTH_LONG).show();
+                    Intent ii = new Intent(QuizMainActivity.this, ModuleActivity.class);
+                    startActivity(ii);
+                }else if (questionLimit == 4 && score <=1){
+                    Toast.makeText(getApplicationContext(), "Sorry, but you have failed the quiz", Toast.LENGTH_LONG).show();
+                    Intent iii = new Intent(QuizMainActivity.this, ModuleActivity.class);
+                    startActivity(iii);
+                }
+                else {
+                    Intent i = new Intent(QuizMainActivity.this, QuizMainActivity.class);
+                    startActivity(i);
+                }
+            }
+        });
+    };
+}
+
+
+
+
+
+
+        //selectQuestion();
+        //populateAnswers();
+        //getSelectedAnswer();
+        //checkSelectedAnswer();
+
+
+        //comment out start HERE*******************
+        /* next.setOnClickListener(new View.OnClickListener() {
+            @Override
             public void onClick(View v) {
                 takenAnswers.clear();
+                mQnANum = 0;
                 multipleChoiceQuiz();
-
-                for (int i = 0; i < NUM_ANSWERS; i++) {
+                for(int i = 0; i < NUM_ANSWERS; i++) {
                     btns[i].setEnabled(true);
                     btns[i].setBackgroundResource(android.R.drawable.btn_default);
                 }
+
                 clickCount++;
-
                 if (clickCount == NUM_QUESTIONS - 1) {
-                    results.setVisibility(View.VISIBLE);
-                    next.setVisibility(View.GONE);
                     next.setOnClickListener(null);
+                    next.setEnabled(false);
+                    next.setVisibility(View.INVISIBLE);
+                    results.setVisibility(View.VISIBLE);
                 }
-
-                System.out.println("Score = " +score);
             }
-        });
+        });*/
 
-        results.setOnClickListener(new View.OnClickListener() {
+
+
+
+        /*results.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent i = new Intent(QuizMainActivity.this, ModuleActivity.class);
+                Intent intent = new Intent(QuizMainActivity.this, ModuleActivity.class);
+                intent.putExtra("score", score);
                 double mark = score / NUM_QUESTIONS;
-                if(mark >= PASS_MARK) {
-                    i.putExtra("pass", "pass");
+                if(mark >= passMark) {
+                    intent.putExtra("pass", "pass");
                 } else {
-                    i.putExtra("fail", "fail");
+                    intent.putExtra("fail", "fail");
                 }
-                startActivity(i);
+                startActivity(intent);
             }
-        });
-
-    }
-
-    public void getQuestionsAnswers() {
-        qm = QandADatabase.getQuestionsArrayList();
-        am = QandADatabase.getAnswersArrayList();
-        //ArrayList<ModuleModel> modules =  moduleModel.getModuleList();
-        /*for (int i = 0; i < modules.size(); i++) {
-            if (getIntent().getStringExtra("module_name").equals(modules.get(0))) {
-                qm.add()
-                qm.remove(qm.subList(4, 15));
-                am = QandADatabase.getAnswersArrayList();
-                am.remove(am.subList(4,15));
-            }
-            else if (getIntent().getStringExtra("module_name").equals(modules.get(1))) {
-                qm = QandADatabase.getQuestionsArrayList();
-                qm.remove(qm.subList(8, 15));
-                qm.remove(qm.subList(0, 3));
-                am = QandADatabase.getAnswersArrayList();
-                am.remove(qm.subList(8, 15));
-                am.remove(qm.subList(0, 3));
-            }
-            else if (getIntent().getStringExtra("module_name").equals(modules.get(2))) {
-                qm = QandADatabase.getQuestionsArrayList();
-                qm.remove(qm.subList(8, 15));
-                qm.remove(qm.subList(0, 3));
-                am = QandADatabase.getAnswersArrayList();
-                am.remove(qm.subList(8, 15));
-                am.remove(qm.subList(0, 3));
-            }
-            else if (getIntent().getStringExtra("module_name").equals(modules.get(3))) {
-                qm = QandADatabase.getQuestionsArrayList();
-                qm.remove(qm.subList(8, 15));
-                qm.remove(qm.subList(0, 3));
-                am = QandADatabase.getAnswersArrayList();
-                am.remove(qm.subList(8, 15));
-                am.remove(qm.subList(0, 3));
-            }
+        });*/
 
 
-        }*/
-    }
 
-    public void multipleChoiceQuiz() {
-        mQnANum = r.nextInt(16);
-        while (takenAnswers.contains(mQnANum)) {
-            mQnANum = r.nextInt(16);
+
+
+
+
+    /*public void multipleChoiceQuiz() {
+        //ensure same question is not shown twice
+        //issue is that last question is always the same as the first
+        mQnANum = r.nextInt(3 + 1);
+        while(takenAnswers.contains(mQnANum)) {
+            mQnANum = r.nextInt(3 + 1);
         }
         btnPlacementNum = r.nextInt(3 + 1);
         if (btnPlacementNum == mQnANum) {
@@ -167,92 +249,58 @@ public class QuizMainActivity extends AppCompatActivity {
         questionText = qm.get(mQnANum).getmQuestion();
         answerText = am.get(mQnANum).getmAnswers();
 
-        btns[btnPlacementNum].setText(answerText);
-        tv.setText(questionText);
 
-        while (takenQuestions.contains(questionText)) {
-            questionText = qm.get(r3.nextInt(16)).getmQuestion();
-        }
-        takenQuestions.add(questionText);
+        tv.setText(questionText);
 
         takenAnswers.add(mQnANum);
 
-        for (int i = 0; i < btns.length; i++) {
-            if (!btns[i].getText().equals(answerText)) {
-                mRandAnswer = r2.nextInt(16);
-                if (!takenAnswers.contains(mRandAnswer)) {
-                    takenAnswers.add(mRandAnswer);
-                    btns[i].setText(am.get(mRandAnswer).getmAnswers());
-                } else {
-                    mRandAnswer = r2.nextInt(16);
-                    i--;
+
+        //randomise Answers *WORKS*
+        for (int i = 0; i < NUM_ANSWERS; i++) {
+            if(i == mQnANum) {
+                btns[i].setText(answerText);
+            } else {
+                mRandAnswer = r.nextInt(3 + 1);
+                while(takenAnswers.contains(mRandAnswer)) {
+                    mRandAnswer = r.nextInt(3 + 1);
                 }
+                btns[i].setText(am.get(mRandAnswer).getmAnswers());
+                takenAnswers.add(mRandAnswer);
             }
         }
 
-    }
+        /*for (int j = 0; j < NUM_ANSWERS; j++) {
+            while (r.nextInt(3 + 1) == mQnANum) {
+                mRandAnswer = r.nextInt(3 + 1);
+            }
+            takenAnswers.add(mRandAnswer);
+            if (j != mQnANum) {
+                btns[j].setText(am.get(mRandAnswer).getmAnswers());
+                mRandAnswer = r.nextInt(3 + 1);
+            } else {
+                j--;
+            }
+        }*/
 
-    public void onAnswerClicked(View v) {
-        switch(v.getId()) {
-            case R.id.btn1:
-                if(btns[0].getText().toString().equals(answerText)) {
-                    btns[0].setBackgroundColor(Color.GREEN);
-                    score++;
-                } else {
-                    Animation shakeButton = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.shake);
-                    btns[0].startAnimation(shakeButton);
-                    btns[0].setBackgroundColor(Color.RED);
-                    btns[btnPlacementNum].setBackgroundColor(Color.GREEN);
-                }
-                for (int i = 0; i < btns.length; i++) {
-                    btns[i].setEnabled(false);
-                }
-                break;
 
-            case R.id.btn2:
-                if(btns[1].getText().toString().equals(answerText)) {
-                    btns[1].setBackgroundColor(Color.GREEN);
-                    score++;
-                } else {
-                    Animation shakeButton = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.shake);
-                    btns[1].startAnimation(shakeButton);
-                    btns[1].setBackgroundColor(Color.RED);
-                    btns[btnPlacementNum].setBackgroundColor(Color.GREEN);
-                }
-                for (int i = 0; i < btns.length; i++) {
-                    btns[i].setEnabled(false);
-                }
-                break;
-
-            case R.id.btn3:
-                if(btns[2].getText().toString().equals(answerText)) {
-                    btns[2].setBackgroundColor(Color.GREEN);
-                    score++;
-                } else {
-                    Animation shakeButton = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.shake);
-                    btns[2].startAnimation(shakeButton);
-                    btns[2].setBackgroundColor(Color.RED);
-                    btns[btnPlacementNum].setBackgroundColor(Color.GREEN);
-                }
-                for (int i = 0; i < btns.length; i++) {
-                    btns[i].setEnabled(false);
-                }
-                break;
-
-            case R.id.btn4:
-                if(btns[3].getText().toString().equals(answerText)) {
-                    btns[3].setBackgroundColor(Color.GREEN);
-                    score++;
-                } else {
-                    Animation shakeButton = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.shake);
-                    btns[3].startAnimation(shakeButton);
-                    btns[3].setBackgroundColor(Color.RED);
-                    btns[btnPlacementNum].setBackgroundColor(Color.GREEN);
-                }
-                for (int i = 0; i < btns.length; i++) {
-                    btns[i].setEnabled(false);
-                }
-                break;
+        /*mRandAnswer = r.nextInt(3+1);
+        if()
+        while(mRandAnswer == mQnANum) {
+            mRandAnswer = r.nextInt(3 + 1);
         }
-    }
-}
+
+        btns[mRandAnswer].setText(am.get(mRandAnswer).getmAnswers());
+
+            for(int j = 0; j < NUM_ANSWERS; j++) {
+                if (!btns[j].equals(answerText) && j != mRandAnswer) {
+                    randAnswer = am.get(mRandAnswer).getmAnswers();
+                    btns[j].setText(randAnswer);
+                }
+            }
+        }*/
+
+
+
+
+
+
