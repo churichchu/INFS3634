@@ -22,27 +22,35 @@ import static com.example.richard.assessment.ModuleActivity.modNumber;
 
 public class QuizMainActivity extends AppCompatActivity {
 
+    //Field used in this activity
     final int NUM_ANSWERS = 4;
     final int NUM_QUESTIONS = 4;
     final double PASS_MARK = 0.5;
-    int btnPlacementNum, mRandAnswer, receivedNum;
-    String questionText, answerText, randAnswer;
+
+    //These fields determine the button placement,
+    //rand answer generated
+    int btnPlacementNum, mRandAnswer;
+    String questionText, answerText;
     Button next, results;
     Button[] btns;
     TextView tv;
     int clickCount = 0;
     int score;
-    ModuleModel moduleModel;
-    View v;
     Intent i = getIntent();
 
+    //Random number generators for question number, answer,
+    //and random answer sample answers
     Random r, r2, r3;
 
+
+    //Initializing the Arraylists for question, answer, and answers generated
     ArrayList<QuestionsModel> qm = new ArrayList<>();
     ArrayList<AnswersModel> am = new ArrayList<>();
     ArrayList<Integer> takenAnswers = new ArrayList<Integer>();
-    ArrayList<String> takenQuestions = new ArrayList<String>();
 
+
+    //This static int is responsible for determining the question and answer generated
+    //according to the module selected in ModuleActivity
     static int mQnANum = 0;
 
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
@@ -51,27 +59,31 @@ public class QuizMainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.quiz_activity_main);
 
-
+        //Initializing the random number generators
         r = new Random();
         r2 = new Random();
         r3 = new Random();
 
-
+        //The textview to display the question in the Quiz
         tv = findViewById(R.id.questionView);
 
+        //Button array to store the answers displayed with each quiz question
         btns = new Button[4];
         btns[0] = (Button) findViewById(R.id.btn1);
         btns[1] = (Button) findViewById(R.id.btn2);
         btns[2] = (Button) findViewById(R.id.btn3);
         btns[3] = (Button) findViewById(R.id.btn4);
 
+        //next and result button for each question
         next = (Button) findViewById(R.id.nextQ);
         results = (Button) findViewById(R.id.see_results);
 
+        //Methods implemented to selected a quniue question and to start the multiple choice instance
         getQuestionsAnswers();
         multipleChoiceQuiz();
 
-
+        //Listener for keeping track of number of questions generated and limiting them
+        //Also keeps track of scores based on correctly answered questions
         next.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -93,6 +105,7 @@ public class QuizMainActivity extends AppCompatActivity {
             }
         });
 
+        //Listener to respond with a pass or fail result based on scores attained by the end of the quiz
         results.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -109,11 +122,14 @@ public class QuizMainActivity extends AppCompatActivity {
 
     }
 
+    //Method to retrieve questions from database
     public void getQuestionsAnswers() {
         qm = QandADatabase.getQuestionsArrayList();
         am = QandADatabase.getAnswersArrayList();
     }
 
+    //Method to generate the MCQ and randomly generate sample answers after randomly allocating the right answer
+    //in one of the buttons in the buttons array
     public void multipleChoiceQuiz() {
 
         if(modNumber == 1){
@@ -154,6 +170,8 @@ public class QuizMainActivity extends AppCompatActivity {
 
         takenAnswers.add(mQnANum);
 
+        //this for loop is actually the conditional loop that
+        //prevents repeated answers in the MCQ per question generated
         for (int i = 0; i < btns.length; i++) {
             if (!btns[i].getText().equals(answerText)) {
                 mRandAnswer = r2.nextInt(16);
@@ -169,6 +187,9 @@ public class QuizMainActivity extends AppCompatActivity {
 
     }
 
+    //Added special effects for correct and incorrect answers selected
+    //green animation if the correct answer is selected
+    //red animation and button shake animation if the incorrect answer is selected
     public void onAnswerClicked(View v) {
         switch (v.getId()) {
             case R.id.btn1:

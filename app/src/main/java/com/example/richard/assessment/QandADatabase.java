@@ -9,13 +9,13 @@ public class QandADatabase {
     //Array list for questions
     public static ArrayList<QuestionsModel>questionsList = new ArrayList<QuestionsModel>(){{
 
-        //questions for primary key and foreign key tutorial
+        //questions for primary key and foreign key module
         add(new QuestionsModel(1, "Why is it the way it is?"));
         add(new QuestionsModel(2, "What primitive data type can we use to display numbers?"));
         add(new QuestionsModel(3, "What primitive data type can we use to display text?"));
         add(new QuestionsModel(4, "Was that your phone in the lost and found?"));
 
-        //questions for ER diagram and relational schema
+        //questions for ER diagram and relational schema module
         add(new QuestionsModel(5, "What is the shape used to signify a Entity type?"));
         add(new QuestionsModel(6, "What must every entity have?"));
         add(new QuestionsModel(7, "What does 'high cardinality' refer to?"));
@@ -27,7 +27,7 @@ public class QandADatabase {
         add(new QuestionsModel(11, "How does the system know you are trying to set a primary key constraint?"));
         add(new QuestionsModel(12, "After creating a table, what is one way you can test if the table exists in the database?"));
 
-        //answers for SQL data manipulation
+        //answers for SQL data manipulation module
         add(new QuestionsModel(13, "What data manipulation language do you use to add an entry into a table?"));
         add(new QuestionsModel(14, "You are given a table and must retrieve a specific attribute from that table, choose the correct statement"));
         add(new QuestionsModel(15, "What is the command to set a conditional query?"));
