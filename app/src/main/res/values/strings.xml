@@ -13,18 +13,17 @@
     <string name="thumbnail_fail">The YouTube thumbnail failed to load.</string>
     <string name="back">Go Back</string>
     <string name="start">start</string>
-    <string name="Incorrect">Sorry, but that choice is incorrect</string>
-    <string name="Correct">Yes, that is correct!</string>
+    <string name="Incorrect">Incorrect</string>
+    <string name="Correct">Correct</string>
     <string name="next">next</string>
     <string name="modules">Modules</string>
     <string name="see_results">See Results</string>
     <string name="nextQ">Next Question</string>
     <string name="pass">pass</string>
-    <string name="Pass_MCQ">You passed! Congratulations!</string>
+    <string name="Pass_MCQ">You passed! Congratulations! You may move on to the next module</string>
     <string name="mcq_results">Multiple Choice Results</string>
     <string name="module_fail">You did not pass the module. Please try again.</string>
     <string name="vid_incomplete">You must first finish watching the video before progressing to the multiple choice quiz</string>
-    <string name="passed">You have scored passing mark! Redirecting you back to module screen.</string>
 
     <string-array name="moduleTitles">
         <item>Module 1: Database Fundamentals</item>

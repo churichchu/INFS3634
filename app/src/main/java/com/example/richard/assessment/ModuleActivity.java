@@ -56,7 +56,6 @@ public class ModuleActivity extends AppCompatActivity {
         if(intent != null) {
             setButtonText();
             if(intent.hasExtra("pass")) {
-                getFeedback();
                 pass1.setVisibility(View.VISIBLE);
                 pass2.setVisibility(View.VISIBLE);
                 pass3.setVisibility(View.VISIBLE);
@@ -109,7 +108,6 @@ public class ModuleActivity extends AppCompatActivity {
                 break;
         }
     }
-
     public void getVideoId(String module) {
         vidModel = new VideoModel();
         vidModel.getVideoModel();
