@@ -27,7 +27,7 @@ public class AnswersModel {
         return mAnswers;
     }
 
-    //sets the answer string 
+    //sets the answer string
     public void setmAnswers(String mAnswers) {
         this.mAnswers = mAnswers;
     }
