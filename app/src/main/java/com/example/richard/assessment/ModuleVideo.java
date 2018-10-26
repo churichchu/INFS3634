@@ -27,6 +27,7 @@ public class ModuleVideo extends YouTubeBaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_module_video);
 
+        //initialise UI elements
         youTubeView = findViewById(R.id.youtube_player);
         moduleName = (TextView) findViewById(R.id.mod_title);
         moduleName.setText(getIntent().getStringExtra("video_title"));
@@ -37,6 +38,7 @@ public class ModuleVideo extends YouTubeBaseActivity {
         back = (Button) findViewById(R.id.back);
 
 
+        //this button allows the user to proceed to the mutliple choice quiz on click
         proc_mcq.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -52,6 +54,7 @@ public class ModuleVideo extends YouTubeBaseActivity {
             }
         });
 
+        //go back to the module activity
         back.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -60,8 +63,7 @@ public class ModuleVideo extends YouTubeBaseActivity {
             }
         });
 
-
-
+        //initialize the YouTubePlayerView and set behaviour for successful and failed initializations.
         youTubeView.initialize(getString(R.string.youtube_api), new YouTubePlayer.OnInitializedListener() {
             @Override
             public void onInitializationSuccess(YouTubePlayer.Provider provider, YouTubePlayer player, boolean wasRestored) {
@@ -84,6 +86,8 @@ public class ModuleVideo extends YouTubeBaseActivity {
             }
         });
     }
+
+    //respond to different playback events on the YouTube video
 
     private YouTubePlayer.PlaybackEventListener playBackEventListener = new YouTubePlayer.PlaybackEventListener() {
         @Override
@@ -110,6 +114,8 @@ public class ModuleVideo extends YouTubeBaseActivity {
         }
     };
 
+
+    //responds to changes in the state of the YouTube Player.
     private YouTubePlayer.PlayerStateChangeListener playerStateChangeListener = new YouTubePlayer.PlayerStateChangeListener() {
         @Override
         public void onLoading() {
@@ -130,6 +136,7 @@ public class ModuleVideo extends YouTubeBaseActivity {
 
         }
 
+        //the user may only progress to the multiple choice quiz once the video has ended
         @Override
         public void onVideoEnded() {
             proc_mcq.setActivated(true);

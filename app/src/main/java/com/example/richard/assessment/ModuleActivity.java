@@ -42,7 +42,6 @@ public class ModuleActivity extends AppCompatActivity {
         mod3 = (Button) findViewById(R.id.mod3);
         mod4 = (Button) findViewById(R.id.mod4);
 
-        //TO DO: IF INTENT.GETEXTRA("MODULE")EQUALS MODULE 1, SHOW ONLY PASS 1.
         pass1 = (ImageView) findViewById(R.id.pass1);
         pass2 = (ImageView) findViewById(R.id.pass2);
         pass3 = (ImageView) findViewById(R.id.pass3);
@@ -55,8 +54,10 @@ public class ModuleActivity extends AppCompatActivity {
 
         intent = getIntent();
 
+
         if(intent != null) {
             setButtonText();
+            //mark correct module as complete
             if(intent.hasExtra("pass")) {
                 getFeedback();
                 if(modNumber == 1) {
@@ -85,6 +86,8 @@ public class ModuleActivity extends AppCompatActivity {
         mod4.setText(buttonText.get(3));
     }
 
+    //get information about video before loading video activity. Set selected module to modNumber
+    //attribute.
     public void onButtonClick(View view) {
         String module;
         switch (view.getId()) {
@@ -115,6 +118,8 @@ public class ModuleActivity extends AppCompatActivity {
         }
 
     }
+
+    //retrieve information about video associated to module and add to extras in intents
     public void getVideoId(String module) {
         vidModel = new VideoModel();
         vidModel.getVideoModel();
@@ -130,12 +135,14 @@ public class ModuleActivity extends AppCompatActivity {
         }
     }
 
+    //naviagte back to application start screen
     public void onBack(View v) {
         Intent i = new Intent(ModuleActivity.this, MainActivity.class);
         this.startActivity(i);
 
     }
 
+    //return a dialog box object to inform the user of their quiz results
     public AlertDialog.Builder getFeedback() {
         feedback = new AlertDialog.Builder(this);
         feedback.setTitle(getString(R.string.mcq_results));

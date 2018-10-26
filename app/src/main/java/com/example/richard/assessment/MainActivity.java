@@ -20,6 +20,7 @@ public class MainActivity extends AppCompatActivity {
         logo = (ImageView) findViewById(R.id.appName);
         start = (Button) findViewById(R.id.startBtn);
 
+        //transition to module activity
         start.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
