@@ -54,14 +54,21 @@ public class ModuleActivity extends AppCompatActivity {
         pass4.setVisibility(View.INVISIBLE);
 
         intent = getIntent();
-        
+
         if(intent != null) {
             setButtonText();
             if(intent.hasExtra("pass")) {
-                pass1.setVisibility(View.VISIBLE);
-                pass2.setVisibility(View.VISIBLE);
-                pass3.setVisibility(View.VISIBLE);
-                pass4.setVisibility(View.VISIBLE);
+                getFeedback();
+                if(modNumber == 1) {
+                    pass1.setVisibility(View.VISIBLE);
+                } else if(modNumber == 2) {
+                    pass2.setVisibility(View.VISIBLE);
+                } else if(modNumber == 3) {
+                    pass3.setVisibility(View.VISIBLE);
+                } else if(modNumber == 4) {
+                    pass4.setVisibility(View.VISIBLE);
+                }
+
             }
             else if (intent.hasExtra("fail")) {
                 getFeedback();
