@@ -192,10 +192,10 @@ public class QuizMainActivity extends AppCompatActivity {
     }
 
     public void multipleChoiceQuiz() {
-        mQnANum = r.nextInt(16);
+        /*mQnANum = r.nextInt(16);
         while (takenAnswers.contains(mQnANum)) {
             mQnANum = r.nextInt(16);
-        }
+        }*/
         btnPlacementNum = r.nextInt(3 + 1);
         if (btnPlacementNum == mQnANum) {
             btnPlacementNum = r.nextInt(4);
