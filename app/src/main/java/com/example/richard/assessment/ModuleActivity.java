@@ -54,7 +54,7 @@ public class ModuleActivity extends AppCompatActivity {
         pass4.setVisibility(View.INVISIBLE);
 
         intent = getIntent();
-
+        
         if(intent != null) {
             setButtonText();
             if(intent.hasExtra("pass")) {
@@ -91,19 +91,19 @@ public class ModuleActivity extends AppCompatActivity {
             case R.id.mod2:
                 module = String.valueOf(mod2.getText());
                 getVideoId(module);
-                modNumber =2;
+                modNumber = 2;
                 break;
 
             case R.id.mod3:
                 module = String.valueOf(mod3.getText());
                 getVideoId(module);
-                modNumber =3;
+                modNumber = 3;
                 break;
 
             case R.id.mod4:
                 module = String.valueOf(mod4.getText());
                 getVideoId(module);
-                modNumber =4;
+                modNumber = 4;
                 break;
         }
 

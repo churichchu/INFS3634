@@ -1,13 +1,10 @@
 package com.example.richard.assessment;
 
-import android.content.Context;
+
 import android.content.Intent;
-import android.content.IntentFilter;
-import android.content.res.Resources;
 import android.graphics.Color;
 import android.os.Build;
 import android.support.annotation.RequiresApi;
-import android.support.v4.content.LocalBroadcastManager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -15,13 +12,12 @@ import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.Random;
-import java.util.concurrent.ThreadLocalRandom;
-import android.support.v4.content.LocalBroadcastManager;
-import android.content.BroadcastReceiver;
+
+
+import static com.example.richard.assessment.ModuleActivity.modNumber;
 
 
 public class QuizMainActivity extends AppCompatActivity {
@@ -60,27 +56,8 @@ public class QuizMainActivity extends AppCompatActivity {
         r2 = new Random();
         r3 = new Random();
 
-        if(ModuleActivity.modNumber == 1){
-            mQnANum = r.nextInt(3);
-        }
-
-        if(ModuleActivity.modNumber == 2){
-            mQnANum = r.nextInt(7-3);
-        }
-
-        if(ModuleActivity.modNumber == 3){
-            mQnANum = r.nextInt(11-7);
-        }
-
-        if(ModuleActivity.modNumber == 4){
-            mQnANum = r.nextInt(16-11);
-        }
-
-
-
 
         tv = findViewById(R.id.questionView);
-
 
         btns = new Button[4];
         btns[0] = (Button) findViewById(R.id.btn1);
@@ -98,7 +75,6 @@ public class QuizMainActivity extends AppCompatActivity {
         next.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                takenAnswers.clear();
                 multipleChoiceQuiz();
 
                 for (int i = 0; i < NUM_ANSWERS; i++) {
@@ -136,63 +112,45 @@ public class QuizMainActivity extends AppCompatActivity {
     public void getQuestionsAnswers() {
         qm = QandADatabase.getQuestionsArrayList();
         am = QandADatabase.getAnswersArrayList();
-
-        //ArrayList<ModuleModel> modules =  moduleModel.getModuleList();
-        /*for (int i = 0; i < modules.size(); i++) {
-            if (getIntent().getStringExtra("module_name").equals(modules.get(0))) {
-                qm.add()
-                qm.remove(qm.subList(4, 15));
-                am = QandADatabase.getAnswersArrayList();
-                am.remove(am.subList(4,15));
-            }
-            else if (getIntent().getStringExtra("module_name").equals(modules.get(1))) {
-                qm = QandADatabase.getQuestionsArrayList();
-                qm.remove(qm.subList(8, 15));
-                qm.remove(qm.subList(0, 3));
-                am = QandADatabase.getAnswersArrayList();
-                am.remove(qm.subList(8, 15));
-                am.remove(qm.subList(0, 3));
-            }
-            else if (getIntent().getStringExtra("module_name").equals(modules.get(2))) {
-                qm = QandADatabase.getQuestionsArrayList();
-                qm.remove(qm.subList(8, 15));
-                qm.remove(qm.subList(0, 3));
-                am = QandADatabase.getAnswersArrayList();
-                am.remove(qm.subList(8, 15));
-                am.remove(qm.subList(0, 3));
-            }
-            else if (getIntent().getStringExtra("module_name").equals(modules.get(3))) {
-                qm = QandADatabase.getQuestionsArrayList();
-                qm.remove(qm.subList(8, 15));
-                qm.remove(qm.subList(0, 3));
-                am = QandADatabase.getAnswersArrayList();
-                am.remove(qm.subList(8, 15));
-                am.remove(qm.subList(0, 3));
-            }
-
-
-        }*/
     }
 
     public void multipleChoiceQuiz() {
-        /*mQnANum = r.nextInt(16);
-        while (takenAnswers.contains(mQnANum)) {
-            mQnANum = r.nextInt(16);
-        }*/
-        btnPlacementNum = r.nextInt(3 + 1);
-        if (btnPlacementNum == mQnANum) {
-            btnPlacementNum = r.nextInt(4);
+
+        if(modNumber == 1){
+            mQnANum = r.nextInt(3 + 1 - 0);
+            while (takenAnswers.contains(mQnANum)) {
+                mQnANum = r.nextInt(3 + 1 - 0) + 0;
+            }
         }
+
+        else if(modNumber == 2){
+            mQnANum = r.nextInt(7 + 1 - 4) + 4;
+            while (takenAnswers.contains(mQnANum)) {
+                mQnANum = r.nextInt(7 + 1 - 4) + 4;
+            }
+        }
+
+        if(modNumber == 3){
+            mQnANum = r.nextInt(11 + 1 - 8) + 8;
+            while (takenAnswers.contains(mQnANum)) {
+                mQnANum = r.nextInt(11 + 1 - 8) + 8;
+            }
+        }
+
+        if(modNumber == 4){
+            mQnANum = r.nextInt(15 + 1 - 12 ) + 12;
+            while (takenAnswers.contains(mQnANum)) {
+                mQnANum = r.nextInt(15 + 1 - 12) + 12;
+            }
+        }
+
+        btnPlacementNum = r.nextInt(3 + 1);
+
         questionText = qm.get(mQnANum).getmQuestion();
         answerText = am.get(mQnANum).getmAnswers();
 
         btns[btnPlacementNum].setText(answerText);
         tv.setText(questionText);
-
-        while (takenQuestions.contains(questionText)) {
-            questionText = qm.get(r3.nextInt(16)).getmQuestion();
-        }
-        takenQuestions.add(questionText);
 
         takenAnswers.add(mQnANum);
 
