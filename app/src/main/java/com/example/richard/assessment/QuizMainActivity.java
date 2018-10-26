@@ -29,6 +29,8 @@ public class QuizMainActivity extends AppCompatActivity {
     int score = 0;
     int questionLimit = 0;
 
+
+
     String questionText, answerText, randAnswer;
     Button next, results;
     Button[] btns;
@@ -38,9 +40,11 @@ public class QuizMainActivity extends AppCompatActivity {
 
 
 
+
+
     ArrayList<QuestionsModel> qm = new ArrayList<QuestionsModel>();
     ArrayList<AnswersModel> am = new ArrayList<AnswersModel>();
-    ArrayList<String> takenAnswers = new ArrayList<String>();
+    ArrayList<Integer> takenAnswers = new ArrayList<Integer>();
 
 
     //@RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
@@ -49,10 +53,12 @@ public class QuizMainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.quiz_activity_main);
 
-         BroadcastReceiver mReceiver = new BroadcastReceiver() {
+
+        BroadcastReceiver mReceiver = new BroadcastReceiver() {
             @Override
             public void onReceive(Context context, Intent intent) {
-                int receivedModule = intent.getIntExtra(ModuleActivity.passedMod,0);
+                Intent i = getIntent();
+                int receivedModule = i.getIntExtra(ModuleActivity.passedMod, 0);
                 System.out.println(receivedModule);
                 switch (receivedModule) {
                     case 1:
@@ -75,7 +81,7 @@ public class QuizMainActivity extends AppCompatActivity {
         };
 
         //Receiving the broadcast from ModuleActivity
-        LocalBroadcastManager.getInstance(this).registerReceiver(mReceiver, new IntentFilter());
+        LocalBroadcastManager.getInstance(this).registerReceiver(mReceiver, new IntentFilter(ModuleActivity.passedMod));
 
         //random number generators
         r = new Random();
@@ -130,7 +136,7 @@ public class QuizMainActivity extends AppCompatActivity {
         takenAnswers.add(answerText);
 
 
-        for(int i =0; i < btns.length; i++){
+        /*for(int i =0; i < btns.length; i++){
 
             if(btns[i].getText().toString().length() == 0){
                 btns[i].setText(randAnswer);
@@ -144,9 +150,9 @@ public class QuizMainActivity extends AppCompatActivity {
                 btnPlacementNum = r3.nextInt(4);
                 btns[btnPlacementNum].setText(randAnswer);
             }
-        }
+        }*/
 
-        /*for(int i = 0; i < btns.length; i++){
+        for(int i = 0; i < btns.length; i++){
             if(!btns[i].getText().toString().equals(answerText)){
                 mRandAnswer = r2.nextInt(16);
                 if(!takenAnswers.contains(mRandAnswer)){
@@ -157,7 +163,7 @@ public class QuizMainActivity extends AppCompatActivity {
                 }
             }
 
-        }*/
+        }
 
 
         next = (Button) findViewById(R.id.nextQ);
@@ -193,38 +199,6 @@ public class QuizMainActivity extends AppCompatActivity {
         }
 
 
-
-
-        next.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                System.out.println(questionLimit);
-                System.out.println(score);
-                if(questionLimit == 4 && score >=2){
-                    Toast.makeText(getApplicationContext(), "passed", Toast.LENGTH_LONG).show();
-                    Intent ii = new Intent(QuizMainActivity.this, ModuleActivity.class);
-                    startActivity(ii);
-                }else if (questionLimit == 4 && score <=1){
-                    Toast.makeText(getApplicationContext(), "Sorry, but you have failed the quiz", Toast.LENGTH_LONG).show();
-                    Intent iii = new Intent(QuizMainActivity.this, ModuleActivity.class);
-                    startActivity(iii);
-                }
-                else {
-                    Intent i = new Intent(QuizMainActivity.this, QuizMainActivity.class);
-                    startActivity(i);
-                }
-            }
-        });
-    }
-
-
-}
-
-
-
-
-
-
         //selectQuestion();
         //populateAnswers();
         //getSelectedAnswer();
@@ -232,7 +206,7 @@ public class QuizMainActivity extends AppCompatActivity {
 
 
         //comment out start HERE*******************
-        /* next.setOnClickListener(new View.OnClickListener() {
+         next.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 takenAnswers.clear();
@@ -251,12 +225,12 @@ public class QuizMainActivity extends AppCompatActivity {
                     results.setVisibility(View.VISIBLE);
                 }
             }
-        });*/
+        });
 
 
 
 
-        /*results.setOnClickListener(new View.OnClickListener() {
+        results.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(QuizMainActivity.this, ModuleActivity.class);
@@ -269,15 +243,31 @@ public class QuizMainActivity extends AppCompatActivity {
                 }
                 startActivity(intent);
             }
+        });
+
+       /* next.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                System.out.println(questionLimit);
+                System.out.println(score);
+                if(questionLimit == 4 && score >=2){
+                    Toast.makeText(getApplicationContext(), "passed", Toast.LENGTH_LONG).show();
+                    Intent ii = new Intent(QuizMainActivity.this, ModuleActivity.class);
+                    startActivity(ii);
+                }else if (questionLimit == 4 && score <=1){
+                    Toast.makeText(getApplicationContext(), "Sorry, but you have failed the quiz", Toast.LENGTH_LONG).show();
+                    Intent iii = new Intent(QuizMainActivity.this, ModuleActivity.class);
+                    startActivity(iii);
+                }
+                else {
+                    Intent i = new Intent(QuizMainActivity.this, QuizMainActivity.class);
+                    startActivity(i);
+                }
+            }
         });*/
+    }
 
-
-
-
-
-
-
-    /*public void multipleChoiceQuiz() {
+    public void multipleChoiceQuiz() {
         //ensure same question is not shown twice
         //issue is that last question is always the same as the first
         mQnANum = r.nextInt(3 + 1);
@@ -311,7 +301,7 @@ public class QuizMainActivity extends AppCompatActivity {
             }
         }
 
-        /*for (int j = 0; j < NUM_ANSWERS; j++) {
+        for (int j = 0; j < NUM_ANSWERS; j++) {
             while (r.nextInt(3 + 1) == mQnANum) {
                 mRandAnswer = r.nextInt(3 + 1);
             }
@@ -322,24 +312,32 @@ public class QuizMainActivity extends AppCompatActivity {
             } else {
                 j--;
             }
-        }*/
-
-
-        /*mRandAnswer = r.nextInt(3+1);
-        if()
-        while(mRandAnswer == mQnANum) {
-            mRandAnswer = r.nextInt(3 + 1);
         }
+
+
+        mRandAnswer = r.nextInt(3+1);
+        if()
+            while(mRandAnswer == mQnANum) {
+                mRandAnswer = r.nextInt(3 + 1);
+            }
 
         btns[mRandAnswer].setText(am.get(mRandAnswer).getmAnswers());
 
-            for(int j = 0; j < NUM_ANSWERS; j++) {
-                if (!btns[j].equals(answerText) && j != mRandAnswer) {
-                    randAnswer = am.get(mRandAnswer).getmAnswers();
-                    btns[j].setText(randAnswer);
-                }
+        for(int j = 0; j < NUM_ANSWERS; j++) {
+            if (!btns[j].equals(answerText) && j != mRandAnswer) {
+                randAnswer = am.get(mRandAnswer).getmAnswers();
+                btns[j].setText(randAnswer);
             }
-        }*/
+        }
+    }
+}
+
+
+
+
+
+
+
 
 
 
