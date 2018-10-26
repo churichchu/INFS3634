@@ -29,7 +29,7 @@ public class QuizMainActivity extends AppCompatActivity {
     final int NUM_ANSWERS = 4;
     final int NUM_QUESTIONS = 4;
     final double PASS_MARK = 0.5;
-    int mQnANum, btnPlacementNum, mRandAnswer;
+    int btnPlacementNum, mRandAnswer, receivedNum;
     String questionText, answerText, randAnswer;
     Button next, results;
     Button[] btns;
@@ -38,6 +38,7 @@ public class QuizMainActivity extends AppCompatActivity {
     int score;
     ModuleModel moduleModel;
     View v;
+    Intent i = getIntent();
 
     Random r, r2, r3;
 
@@ -46,6 +47,7 @@ public class QuizMainActivity extends AppCompatActivity {
     ArrayList<Integer> takenAnswers = new ArrayList<Integer>();
     ArrayList<String> takenQuestions = new ArrayList<String>();
 
+    static int mQnANum = 0;
 
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     @Override
@@ -53,47 +55,28 @@ public class QuizMainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.quiz_activity_main);
 
-        BroadcastReceiver mReceiver = new BroadcastReceiver() {
-            @Override
-            public void onReceive(Context context, Intent intent) {
-                Intent i = getIntent();
-                int receivedModule = i.getIntExtra(ModuleActivity.passedMod, 0);
-                System.out.println(receivedModule);
-                switch (receivedModule) {
-                    case 1:
-                        mQnANum = r.nextInt(3);
-                        break;
-
-                    case 2:
-                        mQnANum = r.nextInt(7-3);
-                        break;
-
-                    case 3:
-                        mQnANum = r.nextInt(11-7);
-                        break;
-
-                    case 4:
-                        mQnANum = r.nextInt(16-11);
-                        break;
-                }
-            }
-        };
-
-        //Receiving the broadcast from ModuleActivity
-        LocalBroadcastManager.getInstance(this).registerReceiver(mReceiver, new IntentFilter(ModuleActivity.passedMod));
-
-        //retrieved questions array list
 
         r = new Random();
         r2 = new Random();
         r3 = new Random();
 
+        if(ModuleActivity.modNumber == 1){
+            mQnANum = r.nextInt(3);
+        }
 
-        //retrieved answers array list
+        if(ModuleActivity.modNumber == 2){
+            mQnANum = r.nextInt(7-3);
+        }
+
+        if(ModuleActivity.modNumber == 3){
+            mQnANum = r.nextInt(11-7);
+        }
+
+        if(ModuleActivity.modNumber == 4){
+            mQnANum = r.nextInt(16-11);
+        }
 
 
-        //Random Number generator for Questions and Answers
-        //r2 is meant for generating random incorrect answers when making mcq
 
 
         tv = findViewById(R.id.questionView);
