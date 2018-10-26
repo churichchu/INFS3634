@@ -56,7 +56,6 @@ public class ModuleActivity extends AppCompatActivity {
         if(intent != null) {
             setButtonText();
             if(intent.hasExtra("pass")) {
-                getFeedback();
                 pass1.setVisibility(View.VISIBLE);
                 pass2.setVisibility(View.VISIBLE);
                 pass3.setVisibility(View.VISIBLE);
@@ -84,32 +83,31 @@ public class ModuleActivity extends AppCompatActivity {
                 module = String.valueOf(mod1.getText());
                 getVideoId(module);
                 passingMod = new Intent().putExtra(passedMod, 1);
-                LocalBroadcastManager.getInstance(ModuleActivity.this).sendBroadcast(intent);
+                LocalBroadcastManager.getInstance(ModuleActivity.this).sendBroadcast(passingMod);
                 break;
 
             case R.id.mod2:
                 module = String.valueOf(mod2.getText());
                 getVideoId(module);
                 passingMod = new Intent().putExtra(passedMod, 2);
-                LocalBroadcastManager.getInstance(ModuleActivity.this).sendBroadcast(intent);
+                LocalBroadcastManager.getInstance(ModuleActivity.this).sendBroadcast(passingMod);
                 break;
 
             case R.id.mod3:
                 module = String.valueOf(mod3.getText());
                 getVideoId(module);
                 passingMod = new Intent().putExtra(passedMod, 3);
-                LocalBroadcastManager.getInstance(ModuleActivity.this).sendBroadcast(intent);
+                LocalBroadcastManager.getInstance(ModuleActivity.this).sendBroadcast(passingMod);
                 break;
 
             case R.id.mod4:
                 module = String.valueOf(mod4.getText());
                 getVideoId(module);
                 passingMod = new Intent().putExtra(passedMod, 4);
-                LocalBroadcastManager.getInstance(ModuleActivity.this).sendBroadcast(intent);
+                LocalBroadcastManager.getInstance(ModuleActivity.this).sendBroadcast(passingMod);
                 break;
         }
     }
-
     public void getVideoId(String module) {
         vidModel = new VideoModel();
         vidModel.getVideoModel();
