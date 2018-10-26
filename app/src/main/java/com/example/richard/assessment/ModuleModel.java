@@ -14,6 +14,7 @@ public class ModuleModel {
     public ModuleModel() {
     }
 
+    //constructor for a ModuleModel object
     public ModuleModel(int id, String moduleName, String moduleDescription, String videoId) {
         this.id = id;
         this.moduleName = moduleName;
@@ -21,6 +22,7 @@ public class ModuleModel {
         this.videoId = videoId;
     }
 
+    //get a list of module objects including description, name and associated video ID.
     public ArrayList<ModuleModel> getModuleList() {
         ArrayList<ModuleModel> moduleList = new ArrayList<>();
         modDesc = Arrays.asList(Resources.getSystem().getStringArray(R.array.moduleDescriptions));
@@ -31,22 +33,6 @@ public class ModuleModel {
             moduleList.add(new ModuleModel((i + 1), modDesc.get(i), modName.get(i), vidId.get(i)));
         }
         return moduleList;
-    }
-
-    public int getId() {
-        return this.id;
-    }
-
-    public String getModuleDescription() {
-        return this.moduleDescription;
-    }
-
-    public String getModuleName() {
-        return this.moduleName;
-    }
-
-    public String getVideoId() {
-        return this.videoId;
     }
 }
 

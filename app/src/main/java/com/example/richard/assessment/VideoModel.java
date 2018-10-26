@@ -9,8 +9,8 @@ import java.util.List;
 public class VideoModel {
     private ArrayList<String> videoIds, videoTitles, videoModules, moduleDescriptions;
     String videoId, videoTitle, videoModule, moduleDescription;
-    Resources res;
 
+    //return a video model object
     public VideoModel() {
         videoIds = new ArrayList<>();
         videoTitles = new ArrayList<>();
@@ -40,6 +40,7 @@ public class VideoModel {
         getVideoModel();
     }
 
+    //constructor to create a VideoModel object
     public VideoModel(String videoId, String videoTitle, String videoModule, String moduleDescriptions) {
         videoId = this.videoId;
         videoTitle = this.videoTitle;
@@ -47,6 +48,7 @@ public class VideoModel {
         moduleDescription = this.moduleDescription;
     }
 
+    //create a videoModel object after running through majority of empty constructor
     public  ArrayList<VideoModel> getVideoModel() {
         ArrayList<VideoModel> videoModel = new ArrayList<VideoModel>();
         for (int i = 0; i < moduleDescriptions.size(); i++) {
@@ -55,18 +57,22 @@ public class VideoModel {
         return videoModel;
     }
 
+    //get List of VideoID's
     public ArrayList<String> getVideoId() {
         return this.videoIds;
     }
 
+    //get list of Video Titles
     public ArrayList<String> getVideoTitle() {
         return this.videoTitles;
     }
 
+    //get list of video modules
     public ArrayList<String> getVideoModule() {
         return this.videoModules;
     }
 
+    //get list of module descriptions
     public ArrayList<String> getModuleDescription() { return this.moduleDescriptions; }
 
 }
